@@ -25,6 +25,8 @@ public class Node : MonoBehaviour
     public float connectionRadius;
     public Node influenceSource;
 
+    private TMP_Text _debugText;
+
     public InformationSource Source { get; set; }
 
     //Node changed type
@@ -65,6 +67,7 @@ public class Node : MonoBehaviour
     {
         //All nodes start as Neutral
         ChangeNodeType(NodeType.Neutral);
+        _debugText = GetComponentInChildren<TMP_Text>();
     }
 
     public void FindConnections(int maxConnections)
@@ -97,7 +100,7 @@ public class Node : MonoBehaviour
 
     public void CheckPower()
     {
-        GetComponentInChildren<TMP_Text>().text = influence.ToString();
+        _debugText.text = influence.ToString();
         if (influence >= 10)
         {
             // This node is now influenced by bad information. RIP

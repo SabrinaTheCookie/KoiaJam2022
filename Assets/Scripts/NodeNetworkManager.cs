@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,14 +10,13 @@ public class NodeNetworkManager : MonoBehaviour
     {
         NodeSpawner.NewNode += AddNode;
         GameController.StartGame += StartLogic;
-
     }
 
-    private void ChangeNodeType(NodeType type, Node node)
+    private static void ChangeNodeType(NodeType type, Node node)
     {
         if (type == NodeType.Neutral)
         {
-            Destroy(node.gameObject.GetComponent<InformationSource>());
+            Destroy(node.Source);
             node.Source = null;
         }
         else
@@ -61,7 +59,7 @@ public class NodeNetworkManager : MonoBehaviour
         SetupInformationSources(gameVars);
 
         _startTicking = true;
-        
+
         // We don't need to be registered for this event until set up is complete
         Node.NodeTypeChanged += ChangeNodeType;
     }
@@ -86,6 +84,7 @@ public class NodeNetworkManager : MonoBehaviour
         }
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis - not called frequently 
     private static void MakeNodeSource(Node node, int power)
     {
         InformationSource infoSource = node.gameObject.AddComponent<InformationSource>();
@@ -94,6 +93,7 @@ public class NodeNetworkManager : MonoBehaviour
 
     private void Update()
     {
+        // GAME JAM LOGIC COMMENTS AT BOTTOM
         if (!_startTicking) return;
         var tick = Time.deltaTime;
 
@@ -107,6 +107,7 @@ public class NodeNetworkManager : MonoBehaviour
                     break;
             }
         }
+
         foreach (Node node in AllNodes)
         {
             switch (node.type)
