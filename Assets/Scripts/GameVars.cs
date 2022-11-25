@@ -9,4 +9,6 @@ public struct GameVars
     [Range(1, 200)] public int minTotalNodes;
     [Range(1, 200)] public int maxTotalNodes;
     [Range(1, 10)] public int maxDefaultNodeConnections;
+    [Range(1, 10)] public int defaultReliablePower;
+    [Range(1, 10)] public int defaultMisinformationPower;
 }

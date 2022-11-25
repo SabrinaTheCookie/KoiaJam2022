@@ -516,9 +516,11 @@ MonoBehaviour:
   gameVariables:
     numReliableSources: 1
     numBadSources: 3
-    minTotalNodes: 50
-    maxTotalNodes: 80
+    minTotalNodes: 70
+    maxTotalNodes: 93
     maxDefaultNodeConnections: 3
+    defaultReliablePower: 3
+    defaultMisinformationPower: 5
   nnmPrefab: {fileID: 1893234062359824775, guid: 4a5a4c8b878725d4aa9d225d2ff0064a, type: 3}
 --- !u!4 &725316415
 Transform:
@@ -851,7 +853,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 30.00003, y: -200}
+  m_AnchoredPosition: {x: 30, y: -200}
   m_SizeDelta: {x: 350, y: 400}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1681180881

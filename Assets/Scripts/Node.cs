@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 
@@ -24,10 +25,11 @@ public class Node : MonoBehaviour
     public float connectionRadius;
     public Node influenceSource;
 
+    public InformationSource Source { get; set; }
+
     //Node changed type
     public void ChangeNodeType(NodeType newType)
     {
-        Debug.Log("Node changed to " + newType);
         type = newType;
         NodeTypeChanged?.Invoke(newType, this);
     }
@@ -39,14 +41,14 @@ public class Node : MonoBehaviour
 
         //Caution check for duplicate node connections.
         if (connectedNodes.Contains(adjacentNode)) return;
-        
+
         //TODO check for maximum connections already
 
         //Register the new connection to this node
         connectedNodes.Add(adjacentNode);
         //Then Register on the connected node
         adjacentNode.ConnectPair(this);
-        
+
         //Create a link between the two
         Link newLink = Instantiate(linkPrefab).GetComponent<Link>();
         newLink.SetupLink(this, adjacentNode);
@@ -70,7 +72,7 @@ public class Node : MonoBehaviour
         //Get all nearby Nodes
         List<Node> nearbyNodes = new List<Node>();
         Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(transform.position, connectionRadius);
-        
+
         foreach (Collider2D coll2D in nearbyColliders)
         {
             nearbyNodes.Add(coll2D.GetComponent<Node>());
@@ -90,6 +92,28 @@ public class Node : MonoBehaviour
         foreach (Node node in nearbyNodes)
         {
             ConnectFirst(node);
+        }
+    }
+
+    public void CheckPower()
+    {
+        GetComponentInChildren<TMP_Text>().text = influence.ToString();
+        if (influence >= 10)
+        {
+            // This node is now influenced by bad information. RIP
+            ChangeNodeType(NodeType.Misinformed);
+        }
+
+        if (influence <= -10)
+        {
+            // We have become a spreader of truths.
+            ChangeNodeType(NodeType.Reliable);
+        }
+
+        if (type is NodeType.Misinformed or NodeType.Reliable && influence is < 5 and > -5)
+        {
+            // Slowly changing our ways
+            ChangeNodeType(NodeType.Neutral);
         }
     }
 

@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 /// <summary>
@@ -8,24 +7,57 @@ using UnityEngine;
 public class InformationSource : MonoBehaviour
 {
     public NodeType sourceType;
-    private readonly Node _nodeAttachedTo;
+    private Node _nodeAttachedTo;
     public int informationPower;
 
-    public InformationSource(Node node)
+    [Header("Tick and Spread")] private float _timeSinceLastSpread;
+    private float _spreadTime;
+
+    public void Attach(Node node, int power)
     {
         _nodeAttachedTo = node;
+        node.Source = this;
         sourceType = _nodeAttachedTo.type;
+        informationPower = power;
+
+        CalculateSpreadTime();
     }
 
-    private void Update()
+    private void CalculateSpreadTime()
     {
-        // Every update cycle, we check how many nodes are we connected to to determine the power output
         var nodesConnectedTo = _nodeAttachedTo.connectedNodes.Count;
-        
-        // Tell each connected node what the current output is from this node
-        
-        // Sum all directly sourced strengths to each node and set the level snd type of the node
-        
-        // Spread the information outwards based on each nodes strength
+        // Spread time is the power * numb of connected nodes
+        _spreadTime = nodesConnectedTo * informationPower;
+    }
+
+    public void AddTime(float tick)
+    {
+        _timeSinceLastSpread += tick;
+
+        if (_timeSinceLastSpread > _spreadTime)
+        {
+            _timeSinceLastSpread = 0f;
+            SpreadPower();
+        }
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    private void SpreadPower()
+    {
+        Debug.Log("node at position " + _nodeAttachedTo.transform.position + " spread power to " +
+                  _nodeAttachedTo.connectedNodes.Count + " nodes.");
+
+        // For every connected node that is not the parent node, if it is neutral, spread the power to it.
+        foreach (Node node in _nodeAttachedTo.connectedNodes)
+        {
+            if (node.type == sourceType) continue;
+            if (node == node.influenceSource) continue;
+
+            node.influence += sourceType == NodeType.Reliable ? informationPower * -1 : informationPower;
+            if (!node.influenceSource)
+            {
+                node.influenceSource = _nodeAttachedTo;
+            }
+        }
     }
 }
