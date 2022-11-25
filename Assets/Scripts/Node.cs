@@ -42,6 +42,8 @@ public class Node : MonoBehaviour
         //Caution check for duplicate node connections.
         if (connectedNodes.Contains(adjacentNode)) return;
 
+        //TODO check for maximum connections already
+
         //Register the new connection to this node
         connectedNodes.Add(adjacentNode);
         //Then Register on the connected node
@@ -113,6 +115,11 @@ public class Node : MonoBehaviour
             // Slowly changing our ways
             ChangeNodeType(NodeType.Neutral);
         }
+    }
+
+    public void BreakConnection(Node endNode)
+    {
+        connectedNodes.Remove(endNode);
     }
 }
 
