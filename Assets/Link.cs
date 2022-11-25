@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 
 public class Link : MonoBehaviour
 {
     public Sprite sprite;
-    public Collider2D collider;
+    public Collider2D coll2D;
     
     public Node startNode;
     public Node endNode;
@@ -18,8 +14,8 @@ public class Link : MonoBehaviour
         if(!sprite)
             sprite = GetComponent<Sprite>();
         
-        if(!collider)
-            collider = GetComponent<Collider2D>();
+        if(!coll2D)
+            coll2D = GetComponent<Collider2D>();
         
         //Node setup
         
@@ -30,9 +26,10 @@ public class Link : MonoBehaviour
         Vector2 endNodePos = endNode.transform.position;
         
         //Find the center of the two nodes
-        Vector2 centerOfNodes = new Vector3(
-            startNodePos.x + endNodePos.x,
-            startNodePos.y + endNodePos.y) / 2;
+        Vector3 centerOfNodes = new(
+            (startNodePos.x + endNodePos.x) / 2,
+            (startNodePos.y + endNodePos.y) / 2,
+            5f);
 
         //Move to center of nodes
         transform.position = centerOfNodes;
@@ -64,9 +61,9 @@ public class Link : MonoBehaviour
         transform.localScale = new Vector3(.1f, linkDirection.magnitude, 1);
     }
 
-    public void SetLinkAngle(Vector3 linkDirection)
+    private void SetLinkAngle(Vector3 linkDirection)
     {
-        float angle = Vector2.Angle(new Vector2(0.0f, 1.0f), new Vector2(linkDirection.x, linkDirection.y));
+        var angle = Vector2.Angle(new Vector2(0.0f, 1.0f), new Vector2(linkDirection.x, linkDirection.y));
         if (linkDirection.x > 0.0f) angle = 360.0f - angle;
         transform.Rotate(0,0, angle);
     }

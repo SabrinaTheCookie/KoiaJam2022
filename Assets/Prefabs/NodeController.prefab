@@ -47,4 +47,4 @@ MonoBehaviour:
   nodePrefab: {fileID: 4075455927196160884, guid: 39615c145f4250a4f970a77898639ba8, type: 3}
   nodeSizeMult: 1
   boundaryMultiplierBuffer: 3
-  minDistanceBetweenNodes: 1.6
+  minDistanceBetweenNodes: 1.75

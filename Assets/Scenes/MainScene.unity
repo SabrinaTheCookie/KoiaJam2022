@@ -152,9 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6404972287e179a4d906d1aa118407d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neutralSprite: {fileID: -2413806693520163455, guid: 4adeaf2d2b1c7417e89f026626d8264f, type: 3}
-  reliableSprite: {fileID: 3286163911610860551, guid: 7216b4879fca295409543b9e318dc273, type: 3}
-  misinformedSprite: {fileID: 3286163911610860551, guid: bff86fdde4c1e47459eb204d047b5f1a, type: 3}
+  neutralSprite: {fileID: 21300000, guid: 85c00bf4eb3e1a44db16530fedc28d72, type: 3}
+  reliableSprite: {fileID: 21300000, guid: fd40b255c487fb04c81d9be5f5ece7ed, type: 3}
+  misinformedSprite: {fileID: 21300000, guid: a8af7aaaae3171841bad3b3a3b59a1b4, type: 3}
 --- !u!4 &452407787
 Transform:
   m_ObjectHideFlags: 0
@@ -430,8 +430,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodeSpawnerPrefab: {fileID: 3318823928572413469, guid: 912df7ec2e45f2d49a8a6f82d84d5e54, type: 3}
   gameVariables:
-    numReliableSources: 2
-    numBadSources: 2
+    numReliableSources: 1
+    numBadSources: 3
     minTotalNodes: 50
     maxTotalNodes: 80
     maxDefaultNodeConnections: 3
@@ -488,7 +488,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -80, y: 15.100006}
+  m_AnchoredPosition: {x: -80, y: 15.099976}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1086564432
