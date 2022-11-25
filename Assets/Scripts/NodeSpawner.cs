@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -52,18 +51,18 @@ public class NodeSpawner : MonoBehaviour
         // Randomly generate locations for all the nodes. Ensure none overlap
         for (var i = 0; i < nodesToPlace; i++)
         {
-            bool noMoreNodes = false;
+            var noMoreNodes = false;
 
             // This does guarantee a node will always be at the center, which is fine for now
             var xSpawn = 0f;
             var ySpawn = 0f;
+            
             var count = 0;
-
             while (OverlappingAnotherNode(new Vector2(xSpawn, ySpawn)))
             {
-                if (count > 1000)
+                if (count > 5000)
                 {
-                    Debug.Log("No space for this many nodes.");
+                    Debug.Log("No space for this many nodes. Total nodes placed is " + AllNodes.Count);
                     noMoreNodes = true;
                     break;
                 }
@@ -75,10 +74,15 @@ public class NodeSpawner : MonoBehaviour
 
             if (noMoreNodes) break;
 
-            GameObject node = Instantiate(nodePrefab, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
-            node.transform.localScale = new Vector3(nodeSizeMult, nodeSizeMult, 1);
-            AllNodes.Add(node.GetComponent<Node>());
+            PlaceNode(xSpawn, ySpawn);
         }
+    }
+
+    private void PlaceNode(float xSpawn, float ySpawn)
+    {
+        GameObject node = Instantiate(nodePrefab, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
+        node.transform.localScale = new Vector3(nodeSizeMult, nodeSizeMult, 1);
+        AllNodes.Add(node.GetComponent<Node>());
     }
 
     private bool OverlappingAnotherNode(Vector2 toCheck)

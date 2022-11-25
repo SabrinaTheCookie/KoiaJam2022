@@ -426,12 +426,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 4075455927196160884, guid: 39615c145f4250a4f970a77898639ba8, type: 3}
-  nodeSizeMult: 0.7
+  nodeSizeMult: 0.85
   maxNodeConnections: 3
-  minTotalNodes: 75
-  maxTotalNodes: 100
+  minTotalNodes: 50
+  maxTotalNodes: 70
   boundaryMultiplierBuffer: 4
-  minDistanceBetweenNodes: 1.5
+  minDistanceBetweenNodes: 1.7
 --- !u!4 &1166232467
 Transform:
   m_ObjectHideFlags: 0
