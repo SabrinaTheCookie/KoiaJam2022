@@ -10,7 +10,8 @@ public class NodeSpawner : MonoBehaviour
     [SerializeField] private GameObject nodePrefab;
     public float nodeSizeMult = 1f;
     private float _nodeRadius;
-    public float boundaryMultiplierBuffer;
+    public float boundaryBufferX;
+    public float boundaryBufferY;
 
     [Tooltip("Value as a percentage of node size")]
     public float minDistanceBetweenNodes = 0.5f;
@@ -28,7 +29,7 @@ public class NodeSpawner : MonoBehaviour
             GameController.Instance.GameVariables.minTotalNodes,
             GameController.Instance.GameVariables.maxTotalNodes);
 
-        Limits boundaries = Limits.GetLimits(_nodeRadius * boundaryMultiplierBuffer);
+        Limits boundaries = Limits.GetLimits(_nodeRadius * boundaryBufferX, _nodeRadius * boundaryBufferY);
 
         Debug.Log(boundaries);
 

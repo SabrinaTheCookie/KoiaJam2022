@@ -27,7 +27,7 @@ public class Limits
     public float Top { get; }
     public float Bottom { get; }
 
-    public static Limits GetLimits(float edgeOffset)
+    public static Limits GetLimits(float edgeOffsetX, float edgeOffsetY)
     {
         if (Camera.main == null)
         {
@@ -38,10 +38,10 @@ public class Limits
         Vector3 lowerLeft = Camera.main.ScreenToWorldPoint(new Vector3(0, 0, 0));
         Vector3 upperRight = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0));
         Limits val = new(
-            lowerLeft.x + edgeOffset,
-            upperRight.x - edgeOffset,
-            upperRight.y - edgeOffset,
-            lowerLeft.y + edgeOffset
+            lowerLeft.x + edgeOffsetX,
+            upperRight.x - edgeOffsetX,
+            upperRight.y - edgeOffsetY,
+            lowerLeft.y + edgeOffsetY
         );
         return val;
     }
