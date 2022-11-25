@@ -37,21 +37,25 @@ public class NodeNetworkManager : MonoBehaviour
     {
         // First choose the source nodes and set them
         // At this point, all nodes should be valid so we should connect them all
-        Debug.Log(NumberNodes());
         foreach (Node node in AllNodes)
         {
             node.FindConnections(gameVars.maxDefaultNodeConnections);
         }
 
+        // Sort AllNodes to be in order of left to right on player screen
+        AllNodes.Sort(new ComparisonX());
+
+        for (var i = 0; i < gameVars.numReliableSources; i++)
+        {
+            AllNodes[i].ChangeNodeType(NodeType.Reliable);
+        }
+
+        for (var i = NumberNodes() - 1; i >= NumberNodes() - gameVars.numBadSources; i--)
+        {
+            AllNodes[i].ChangeNodeType(NodeType.Misinformed);
+        }
+
         _startTicking = true;
-    }
-
-    private void AddInformationSource(NodeType type)
-    {
-    }
-
-    private void RemoveInformationSource(NodeType type)
-    {
     }
 
     private void Update()

@@ -13,7 +13,7 @@ public enum NodeType
 public class Node : MonoBehaviour
 {
     public static event Action CutNode;
-    public static event Action<NodeType> NodeTypeChanged;
+    public static event Action<NodeType, Node> NodeTypeChanged;
 
     //TODO move link prefab to manager
     public GameObject linkPrefab;
@@ -27,8 +27,9 @@ public class Node : MonoBehaviour
     //Node changed type
     public void ChangeNodeType(NodeType newType)
     {
-        //Whenever a node changes
-        NodeTypeChanged?.Invoke(newType);
+        Debug.Log("Node changed to " + newType);
+        type = newType;
+        NodeTypeChanged?.Invoke(newType, this);
     }
 
     //Connects to a node. This is the first step in creating a node link.
@@ -56,8 +57,7 @@ public class Node : MonoBehaviour
         connectedNodes.Add(pairedNode);
     }
 
-    // Start is called before the first frame update
-    private void Start()
+    private void Awake()
     {
         //All nodes start as Neutral
         ChangeNodeType(NodeType.Neutral);
@@ -90,9 +90,18 @@ public class Node : MonoBehaviour
             ConnectFirst(node);
         }
     }
+}
 
-    // Update is called once per frame
-    void Update()
+public class ComparisonX : IComparer<Node>
+{
+    public int Compare(Node x, Node y)
     {
+        if (x == null || y == null)
+        {
+            return 0;
+        }
+
+        if (x.transform.position.x <= y.transform.position.x) return -1;
+        return 1;
     }
 }
