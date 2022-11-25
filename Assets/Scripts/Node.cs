@@ -24,32 +24,29 @@ public class Node : MonoBehaviour
     public float connectionRadius;
     public Node influenceSource;
 
-    public bool searchForConnections;
-
     //Node changed type
     public void ChangeNodeType(NodeType newType)
     {
         //Whenever a node changes
         NodeTypeChanged?.Invoke(newType);
     }
-    
+
     //Connects to a node. This is the first step in creating a node link.
-    public void Connect(Node adjacentNode)
+    private void ConnectFirst(Node adjacentNode)
     {
         if (!adjacentNode) return;
-        
+
         //Caution check for duplicate node connections.
         if (connectedNodes.Contains(adjacentNode)) return;
-        
+
         //Register the new connection to this node
         connectedNodes.Add(adjacentNode);
         //Then Register on the connected node
         adjacentNode.ConnectPair(this);
-        
+
         //Create a link between the two
         Link newLink = Instantiate(linkPrefab).GetComponent<Link>();
         newLink.SetupLink(this, adjacentNode);
-        
     }
 
     //Connects to a node. This is the second (Final) step in creating a node link.
@@ -64,26 +61,22 @@ public class Node : MonoBehaviour
     {
         //All nodes start as Neutral
         ChangeNodeType(NodeType.Neutral);
-        
-        //!!! TODO Move to manager/controller class
-        //Check for nearby nodes
-        if(searchForConnections)FindConnections(2);
     }
 
-    private void FindConnections(int maxConnections)
+    public void FindConnections(int maxConnections)
     {
-
         //Get all nearby Nodes
         List<Node> nearbyNodes = new List<Node>();
         Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(transform.position, connectionRadius);
-        
+
         foreach (Collider2D coll2D in nearbyColliders)
         {
             nearbyNodes.Add(coll2D.GetComponent<Node>());
-            
+
             //Stop connecting after maximum reached
             if (nearbyNodes.Count > maxConnections) break;
         }
+
         //Remove self from nearby nodes
         Node col = GetComponent<Node>();
         if (nearbyNodes.Contains(col))
@@ -94,14 +87,12 @@ public class Node : MonoBehaviour
         //Connect to each node
         foreach (Node node in nearbyNodes)
         {
-
-            Connect(node);
+            ConnectFirst(node);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
     }
 }

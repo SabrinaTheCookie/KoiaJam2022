@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -37,6 +36,12 @@ public class NodeNetworkManager : MonoBehaviour
     private static void StartLogic(GameVars gameVars)
     {
         // First choose the source nodes and set them
+        // At this point, all nodes should be valid so we should connect them all
+        Debug.Log(NumberNodes());
+        foreach (Node node in AllNodes)
+        {
+            node.FindConnections(gameVars.maxDefaultNodeConnections);
+        }
 
         _startTicking = true;
     }

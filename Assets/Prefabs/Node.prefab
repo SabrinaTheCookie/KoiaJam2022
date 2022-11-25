@@ -102,9 +102,8 @@ MonoBehaviour:
   connectedNodes: []
   type: 1
   influence: 0
-  connectionRadius: 3
+  connectionRadius: 4
   influenceSource: {fileID: 0}
-  searchForConnections: 0
 --- !u!58 &4075455927196160885
 CircleCollider2D:
   m_ObjectHideFlags: 0

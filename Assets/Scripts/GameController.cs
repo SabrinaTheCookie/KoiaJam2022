@@ -12,7 +12,8 @@ public class GameController : MonoBehaviour
 
     [SerializeField] private GameObject nodeSpawnerPrefab;
     [SerializeField] private GameVars gameVariables;
-    
+    [SerializeField] private GameObject nnmPrefab;
+
     private void Awake()
     {
         if (Instance != null) return;
@@ -23,11 +24,11 @@ public class GameController : MonoBehaviour
     /// <summary>
     /// Called when the game begins - sets up the game world and starts the gameplay through invoke
     /// </summary>
-    private void OnStartGame()
+    public void OnStartGame()
     {
         // Set up game world
+        Instantiate(nnmPrefab, Vector3.zero, Quaternion.identity);
         Instantiate(nodeSpawnerPrefab, Vector3.zero, Quaternion.identity);
-
         StartGame?.Invoke(GameVariables);
     }
 }

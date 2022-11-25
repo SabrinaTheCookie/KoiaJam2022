@@ -18,10 +18,6 @@ public class NodeSpawner : MonoBehaviour
     private void Awake()
     {
         _nodeRadius = nodePrefab.GetComponent<Renderer>().bounds.size.x / 2 * nodeSizeMult;
-    }
-
-    private void Start()
-    {
         SetUpNodes();
     }
 
