@@ -14,7 +14,9 @@ public class NodeSpawner : MonoBehaviour
     public int maxNodeConnections = 3;
     public int minTotalNodes;
     public int maxTotalNodes;
-    private List<Node> _allNodes;
+
+    public List<Node> AllNodes { get; private set; }
+
     public float boundaryMultiplierBuffer;
 
     [Tooltip("Value as a percentage of node size")]
@@ -25,7 +27,7 @@ public class NodeSpawner : MonoBehaviour
         Instance = this;
 
         _nodeRadius = nodePrefab.GetComponent<Renderer>().bounds.size.x / 2 * nodeSizeMult;
-        _allNodes = new List<Node>();
+        AllNodes = new List<Node>();
     }
 
     private void OnEnable()
@@ -75,14 +77,14 @@ public class NodeSpawner : MonoBehaviour
 
             GameObject node = Instantiate(nodePrefab, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
             node.transform.localScale = new Vector3(nodeSizeMult, nodeSizeMult, 1);
-            _allNodes.Add(node.GetComponent<Node>());
+            AllNodes.Add(node.GetComponent<Node>());
         }
     }
 
     private bool OverlappingAnotherNode(Vector2 toCheck)
     {
         // Check every other node already created and make sure that no nodes are overlapping or too close
-        return _allNodes.Select(node => Vector2.Distance(node.transform.position, toCheck))
+        return AllNodes.Select(node => Vector2.Distance(node.transform.position, toCheck))
             .Any(distanceBetweenNodes => distanceBetweenNodes < 2 * _nodeRadius * minDistanceBetweenNodes);
     }
 }
