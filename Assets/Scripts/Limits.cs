@@ -22,10 +22,10 @@ public class Limits
         Bottom = 0;
     }
 
-    private float Left { get; }
-    private float Right { get; }
-    private float Top { get; }
-    private float Bottom { get; }
+    public float Left { get; }
+    public float Right { get; }
+    public float Top { get; }
+    public float Bottom { get; }
 
     public static Limits GetLimits(float edgeOffset)
     {
@@ -48,7 +48,7 @@ public class Limits
 
     public override string ToString()
     {
-        return "Left: " + Left + ", Right: " + Right + ", Top: " + Top + ", Bottom: " + Bottom;
+        return "Screen world limits: Left: " + Left + ", Right: " + Right + ", Top: " + Top + ", Bottom: " + Bottom;
     }
 
     protected bool Equals(Limits other)
