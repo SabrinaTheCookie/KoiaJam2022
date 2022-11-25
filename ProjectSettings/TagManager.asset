@@ -5,11 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Node
+  - Ignore
+  - Link
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Link
   - Water
   - UI
   - 
