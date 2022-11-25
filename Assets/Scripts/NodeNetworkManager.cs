@@ -45,11 +45,13 @@ public class NodeNetworkManager : MonoBehaviour
         // Sort AllNodes to be in order of left to right on player screen
         AllNodes.Sort(new ComparisonX());
 
+        //Generate Reliable Sources
         for (var i = 0; i < gameVars.numReliableSources; i++)
         {
             AllNodes[i].ChangeNodeType(NodeType.Reliable);
         }
 
+        //Generate Misinformed Sources
         for (var i = NumberNodes() - 1; i >= NumberNodes() - gameVars.numBadSources; i--)
         {
             AllNodes[i].ChangeNodeType(NodeType.Misinformed);

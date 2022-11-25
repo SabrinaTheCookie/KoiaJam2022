@@ -48,6 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprite: {fileID: 0}
   coll2D: {fileID: 0}
+  linkLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
   startNode: {fileID: 0}
   endNode: {fileID: 0}
 --- !u!212 &4906077036483032013

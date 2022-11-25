@@ -39,12 +39,14 @@ public class Node : MonoBehaviour
 
         //Caution check for duplicate node connections.
         if (connectedNodes.Contains(adjacentNode)) return;
+        
+        //TODO check for maximum connections already
 
         //Register the new connection to this node
         connectedNodes.Add(adjacentNode);
         //Then Register on the connected node
         adjacentNode.ConnectPair(this);
-
+        
         //Create a link between the two
         Link newLink = Instantiate(linkPrefab).GetComponent<Link>();
         newLink.SetupLink(this, adjacentNode);
@@ -68,7 +70,7 @@ public class Node : MonoBehaviour
         //Get all nearby Nodes
         List<Node> nearbyNodes = new List<Node>();
         Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(transform.position, connectionRadius);
-
+        
         foreach (Collider2D coll2D in nearbyColliders)
         {
             nearbyNodes.Add(coll2D.GetComponent<Node>());
@@ -89,6 +91,11 @@ public class Node : MonoBehaviour
         {
             ConnectFirst(node);
         }
+    }
+
+    public void BreakConnection(Node endNode)
+    {
+        connectedNodes.Remove(endNode);
     }
 }
 

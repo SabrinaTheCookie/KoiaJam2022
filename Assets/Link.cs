@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Link : MonoBehaviour
 {
     public Sprite sprite;
     public Collider2D coll2D;
+
+    public LayerMask linkLayerMask;
     
     public Node startNode;
     public Node endNode;
@@ -52,13 +55,55 @@ public class Link : MonoBehaviour
     {
         //TODO Stop overlaps
         
+        //Also hitting nodes...
         //Check overlap - if overlapping, destroy this link and undo the connection (That has been established)
-        //Debug.Log(Physics2D.IsTouchingLayers(collider, 3));
+        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, transform.localScale, transform.rotation.z, linkLayerMask);
+
+        Debug.Log(hits.Length);
+        foreach (Collider2D hit in hits)
+        {
+            Debug.Log(hit.tag);
+            if (!hit)
+            {
+                Debug.Log("No overlaps found");
+                return;
+            }
+
+            if (!hit.CompareTag("Link"))
+            {
+                Debug.Log("No overlap with links found");
+                return;
+            }
+
+            Debug.Log("Overlap found at - " + transform.position);
+            
+            
+            BreakConnection();
+        }
+        
+    }
+
+    private void BreakConnection()
+    {
+        //Remove connection from start node
+        startNode.BreakConnection(endNode);
+        
+        //Remove connection from end node
+        endNode.BreakConnection(startNode);
+        
+        Debug.Log("Destroy me daddy");
+        //Destroy this link
+        Destroy(gameObject);
     }
 
     private void SetLinkSize(Vector2 linkDirection)
     {
-        transform.localScale = new Vector3(.1f, linkDirection.magnitude, 1);
+        float linkLength = linkDirection.magnitude;
+        
+        //Remove the radius of nodes from the length of the link.
+        linkLength -= startNode.transform.localScale.magnitude / 2;
+        
+        transform.localScale = new Vector3(.1f, linkLength, 1);
     }
 
     private void SetLinkAngle(Vector3 linkDirection)
