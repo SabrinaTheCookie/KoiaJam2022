@@ -11,6 +11,7 @@ public class NodeSpriteManager : MonoBehaviour
         Node.NodeTypeChanged += ChangeNodeSprite;
     }
 
+    // ReSharper disable Unity.PerformanceAnalysis - this is called so infrequently that it won't matter
     private void ChangeNodeSprite(NodeType type, Node nodeRef)
     {
         SpriteRenderer sr = nodeRef.GetComponent<SpriteRenderer>();
@@ -27,7 +28,6 @@ public class NodeSpriteManager : MonoBehaviour
                 sr.sprite = misinformedSprite;
                 break;
             default:
-                Debug.Log("Issue setting node sprite image - type given was " + type);
                 break;
         }
     }
