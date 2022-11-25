@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -7,8 +8,14 @@ using UnityEngine;
 public class InformationSource : MonoBehaviour
 {
     public NodeType sourceType;
-    private Node _nodeAttachedTo;
+    private readonly Node _nodeAttachedTo;
     public int informationPower;
+
+    public InformationSource(Node node)
+    {
+        _nodeAttachedTo = node;
+        sourceType = _nodeAttachedTo.type;
+    }
 
     private void Update()
     {

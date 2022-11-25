@@ -1,21 +1,15 @@
-using System.Collections.Generic;
+using System;
 using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class NodeSpawner : MonoBehaviour
 {
-    public static NodeSpawner Instance { get; private set; }
+    public static event Action<Node> NewNode;
 
     [SerializeField] private GameObject nodePrefab;
     public float nodeSizeMult = 1f;
     private float _nodeRadius;
-    public int maxNodeConnections = 3;
-    public int minTotalNodes;
-    public int maxTotalNodes;
-
-    public List<Node> AllNodes { get; private set; }
-
     public float boundaryMultiplierBuffer;
 
     [Tooltip("Value as a percentage of node size")]
@@ -23,15 +17,7 @@ public class NodeSpawner : MonoBehaviour
 
     private void Awake()
     {
-        Instance = this;
-
         _nodeRadius = nodePrefab.GetComponent<Renderer>().bounds.size.x / 2 * nodeSizeMult;
-        AllNodes = new List<Node>();
-    }
-
-    private void OnEnable()
-    {
-        GameController.StartGame += SetUpNodes;
     }
 
     private void Start()
@@ -42,7 +28,9 @@ public class NodeSpawner : MonoBehaviour
     private void SetUpNodes()
     {
         // Set up the nodes in the game world
-        var nodesToPlace = Random.Range(minTotalNodes, maxTotalNodes);
+        var nodesToPlace = Random.Range(
+            GameController.Instance.GameVariables.minTotalNodes,
+            GameController.Instance.GameVariables.maxTotalNodes);
 
         Limits boundaries = Limits.GetLimits(_nodeRadius * boundaryMultiplierBuffer);
 
@@ -56,13 +44,14 @@ public class NodeSpawner : MonoBehaviour
             // This does guarantee a node will always be at the center, which is fine for now
             var xSpawn = 0f;
             var ySpawn = 0f;
-            
+
             var count = 0;
             while (OverlappingAnotherNode(new Vector2(xSpawn, ySpawn)))
             {
                 if (count > 5000)
                 {
-                    Debug.Log("No space for this many nodes. Total nodes placed is " + AllNodes.Count);
+                    Debug.Log("No space for this many nodes. Total nodes placed is " +
+                              NodeNetworkManager.NumberNodes());
                     noMoreNodes = true;
                     break;
                 }
@@ -82,13 +71,13 @@ public class NodeSpawner : MonoBehaviour
     {
         GameObject node = Instantiate(nodePrefab, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
         node.transform.localScale = new Vector3(nodeSizeMult, nodeSizeMult, 1);
-        AllNodes.Add(node.GetComponent<Node>());
+        NewNode?.Invoke(node.GetComponent<Node>());
     }
 
     private bool OverlappingAnotherNode(Vector2 toCheck)
     {
         // Check every other node already created and make sure that no nodes are overlapping or too close
-        return AllNodes.Select(node => Vector2.Distance(node.transform.position, toCheck))
+        return NodeNetworkManager.AllNodes.Select(node => Vector2.Distance(node.transform.position, toCheck))
             .Any(distanceBetweenNodes => distanceBetweenNodes < 2 * _nodeRadius * minDistanceBetweenNodes);
     }
 }

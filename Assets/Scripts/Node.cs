@@ -1,9 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEditor.MemoryProfiler;
 using UnityEngine;
 
 
@@ -57,14 +53,14 @@ public class Node : MonoBehaviour
     }
 
     //Connects to a node. This is the second (Final) step in creating a node link.
-    public void ConnectPair(Node pairedNode)
+    private void ConnectPair(Node pairedNode)
     {
         //Acknowledge the connection between these nodes <3
         connectedNodes.Add(pairedNode);
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         //All nodes start as Neutral
         ChangeNodeType(NodeType.Neutral);
@@ -81,9 +77,9 @@ public class Node : MonoBehaviour
         List<Node> nearbyNodes = new List<Node>();
         Collider2D[] nearbyColliders = Physics2D.OverlapCircleAll(transform.position, connectionRadius);
         
-        foreach (Collider2D collider2D in nearbyColliders)
+        foreach (Collider2D coll2D in nearbyColliders)
         {
-            nearbyNodes.Add(collider2D.GetComponent<Node>());
+            nearbyNodes.Add(coll2D.GetComponent<Node>());
             
             //Stop connecting after maximum reached
             if (nearbyNodes.Count > maxConnections) break;
