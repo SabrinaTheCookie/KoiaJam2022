@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -126,6 +127,11 @@ public class Node : MonoBehaviour
     public void BreakConnection(Node endNode)
     {
         connectedNodes.Remove(endNode);
+    }
+
+    public bool CanBePromoted()
+    {
+        return type != NodeType.Misinformed && connectedNodes.Any(node => node.type == NodeType.Reliable);
     }
 
     public void NodePromotion()

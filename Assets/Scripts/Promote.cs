@@ -28,7 +28,7 @@ public class Promote : MonoBehaviour
         if (!hitNode) return false;
 
         //Node used successfully! Lets crush that misinformation!
-        if (hitNode.type != NodeType.Misinformed)
+        if (hitNode.CanBePromoted())
         {
             hitNode.NodePromotion();
             StartCooldown();
