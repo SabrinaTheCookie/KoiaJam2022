@@ -820,7 +820,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerInput: {fileID: 904429424}
-  currentTool: 2
+  currentTool: 3
   promoter: {fileID: 904429428}
   unfollower: {fileID: 904429427}
   verifier: {fileID: 904429429}
