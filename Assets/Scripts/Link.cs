@@ -23,6 +23,17 @@ public class Link : MonoBehaviour
         _lcg = GetComponent<LinkColorGradient>();
         _lcmRef = FindObjectOfType<LinkColorManager>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+        GameController.StopGame += KillSelf;
+    }
+
+    private void KillSelf()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        GameController.StopGame -= KillSelf;
     }
 
     public void Update()

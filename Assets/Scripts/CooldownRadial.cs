@@ -52,4 +52,9 @@ public class CooldownRadial : MonoBehaviour
         cooldownRemaining = cooldownRemaining / _cooldown;
         cooldownOverlayImage.fillAmount = cooldownRemaining;
     }
+
+    public void ResetRadial()
+    {
+        _cooldownEndTime = Time.time;
+    }
 }

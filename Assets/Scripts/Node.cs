@@ -73,6 +73,17 @@ public class Node : MonoBehaviour
 
         //All nodes start as Neutral
         ChangeNodeType(NodeType.Neutral);
+        GameController.StopGame += KillSelf;
+    }
+
+    private void KillSelf()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        GameController.StopGame -= KillSelf;
     }
 
     public void FindConnections(int maxConnections)

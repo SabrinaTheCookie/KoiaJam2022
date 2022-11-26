@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject nodeSpawnerPrefab;
     [SerializeField] private GameVars gameVariables;
     [SerializeField] private GameObject nnmPrefab;
+    [SerializeField] private GameObject gameEndUI;
+    
+    [SerializeField] private GameObject gameWon;
+    [SerializeField] private GameObject gameLost;
+    [SerializeField] private GameObject gameUI;
 
     private NodeNetworkManager _nodeNetworkManager;
     private GameState _state;
@@ -38,6 +44,7 @@ public class GameController : MonoBehaviour
     /// </summary>
     public void OnStartGame()
     {
+        gameUI.SetActive(true);
         // Set up game world
         GameObject obj = Instantiate(nnmPrefab, Vector3.zero, Quaternion.identity);
         _nodeNetworkManager = obj.GetComponent<NodeNetworkManager>();
@@ -51,30 +58,37 @@ public class GameController : MonoBehaviour
 
     private void NodeOnNodeTypeChanged(NodeType type, Node node)
     {
-        StopGame?.Invoke();
-        
         // Check to see if the player has won or lost
         if (_nodeNetworkManager.CheckAllNodesOfType(NodeType.Reliable))
         {
             _state = GameState.Won;
             GameEnded(_state);
+            StopGame?.Invoke();
         }
         else if (_nodeNetworkManager.CheckAllNodesOfType(NodeType.Misinformed))
         {
             _state = GameState.Lost;
             GameEnded(_state);
+            StopGame?.Invoke();
         }
     }
 
     private void GameEnded(GameState state)
     {
+        Node.NodeTypeChanged -= NodeOnNodeTypeChanged;
+        gameEndUI.SetActive(true);
+        gameUI.SetActive(false);
         switch (state)
         {
+            case GameState.MainMenu:
+                break;
+            case GameState.Playing:
+                break;
             case GameState.Won:
-                // Show the win screen
+                gameWon.SetActive(true);
                 break;
             case GameState.Lost:
-                // Show the loss screen
+                gameLost.SetActive(true);
                 break;
         }
     }
@@ -82,5 +96,14 @@ public class GameController : MonoBehaviour
     private void OnDisable()
     {
         Node.NodeTypeChanged -= NodeOnNodeTypeChanged;
+    }
+
+    public void ResetGame()
+    {
+        Destroy(_nodeNetworkManager);
+        gameLost.SetActive(false);
+        gameWon.SetActive(false);
+        gameEndUI.SetActive(false);
+        OnStartGame();
     }
 }

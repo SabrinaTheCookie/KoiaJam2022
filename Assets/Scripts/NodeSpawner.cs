@@ -20,6 +20,17 @@ public class NodeSpawner : MonoBehaviour
     {
         _nodeRadius = nodePrefab.GetComponent<Renderer>().bounds.size.x / 2 * nodeSizeMult;
         SetUpNodes();
+        GameController.StopGame += KillSelf;
+    }
+
+    private void KillSelf()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnDisable()
+    {
+        GameController.StopGame -= KillSelf;
     }
 
     private void SetUpNodes()

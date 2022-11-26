@@ -145,4 +145,14 @@ public class PlayerCursor : MonoBehaviour
 
         return mouseClickPos;
     }
+
+    private void OnEnable()
+    {
+        GameController.StopGame += ResetAllValues;
+    }
+
+    private void ResetAllValues()
+    {
+        currentTool = CursorTools.Select;
+    }
 }

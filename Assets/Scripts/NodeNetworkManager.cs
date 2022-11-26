@@ -11,12 +11,18 @@ public class NodeNetworkManager : MonoBehaviour
     {
         NodeSpawner.NewNode += AddNode;
         GameController.StartGame += StartLogic;
+        GameController.StopGame += GameControllerOnStopGame;
+    }
+
+    private void GameControllerOnStopGame()
+    {
+        _startTicking = false;
     }
 
     private static void ChangeNodeType(NodeType type, Node node)
     {
         if (!node) return;
-        
+
         if (type == NodeType.Neutral)
         {
             Destroy(node.Source);
@@ -36,6 +42,7 @@ public class NodeNetworkManager : MonoBehaviour
         NodeSpawner.NewNode -= AddNode;
         GameController.StartGame -= StartLogic;
         Node.NodeTypeChanged -= ChangeNodeType;
+        GameController.StopGame -= GameControllerOnStopGame;
     }
 
     private void Awake()
@@ -119,6 +126,7 @@ public class NodeNetworkManager : MonoBehaviour
 
         foreach (Node node in AllNodes)
         {
+            if (!_startTicking) break;
             node.CheckPower();
         }
     }

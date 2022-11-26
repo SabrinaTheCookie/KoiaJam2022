@@ -46,4 +46,19 @@ public class Verifier : MonoBehaviour
         _timeOfCooldown = Time.time;
         CooldownRadialManager.instance.verifyCooldownRadial.CooldownStarted(cooldownDuration);
     }
+    private void OnEnable()
+    {
+        GameController.StopGame += GameReset;
+    }
+
+    private void GameReset()
+    {
+        _timeOfCooldown = Time.time - cooldownDuration;
+    }
+
+    private void OnDisable()
+    {
+        GameController.StopGame -= GameReset;
+    }
+    
 }
