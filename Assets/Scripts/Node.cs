@@ -127,9 +127,8 @@ public class Node : MonoBehaviour
     
     public void NodePromotion()
     {
-        //TODO add promotions
-        Debug.Log(transform.position + " has been promoted!");
-
+        influence -= 10;
+        CheckPower();
     }
 
     public void NodeDemotion()
