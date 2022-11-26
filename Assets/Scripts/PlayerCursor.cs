@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,6 +10,7 @@ public enum CursorTools
 }
 public class PlayerCursor : MonoBehaviour
 {
+    public static event Action NewToolSelected;
     public PlayerInput playerInput;
     public CursorTools currentTool = CursorTools.Select;
 
@@ -25,6 +27,7 @@ public class PlayerCursor : MonoBehaviour
     
     public void ChangeTool(string newTool)
     {
+        // Added to try and turn OFF buttons by pressing them again but does not work due to Update calls?
         if (newTool == "Promote" && currentTool == CursorTools.Promote || 
             newTool == "Unfollow" && currentTool == CursorTools.Unfollow)
         {
@@ -45,6 +48,7 @@ public class PlayerCursor : MonoBehaviour
             "Select" => CursorTools.Select,
             _ => currentTool
         };
+        NewToolSelected?.Invoke();
     }
 
     private void ResetCurrentToolButton() 

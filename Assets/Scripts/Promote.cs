@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class Promote : MonoBehaviour
 {
+    public static event Action NodePromoted;
     public float cooldownDuration;
     private float _timeOfCooldown;
 
@@ -31,6 +32,7 @@ public class Promote : MonoBehaviour
         if (hitNode.CanBePromoted())
         {
             hitNode.NodePromotion();
+            NodePromoted?.Invoke();
             StartCooldown();
             //Tool is consumed on cursor here
             return true;

@@ -19,6 +19,18 @@ public class SoundEffects : MonoBehaviour
     {
         GameController.StartGame += RegisterForNodeChanges;
         Unfollow.CutNodes += PlayCutAudio;
+        PlayerCursor.NewToolSelected += ButtonPress;
+        Promote.NodePromoted += PlayPromoteSound;
+    }
+
+    private void PlayPromoteSound()
+    {
+        _audioSource.PlayOneShot(promoteNode);
+    }
+
+    private void ButtonPress()
+    {
+        _audioSource.PlayOneShot(buttonClick);
     }
 
     private void PlayCutAudio()
@@ -44,6 +56,10 @@ public class SoundEffects : MonoBehaviour
 
     private void OnDisable()
     {
+        GameController.StartGame -= RegisterForNodeChanges;
+        Unfollow.CutNodes -= PlayCutAudio;
         Node.NodeTypeChanged -= PlayNodeChangedAudio;
+        PlayerCursor.NewToolSelected -= ButtonPress;
+        Promote.NodePromoted -= PlayPromoteSound;
     }
 }
