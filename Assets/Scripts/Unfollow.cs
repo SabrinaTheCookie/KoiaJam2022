@@ -1,14 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
+using UnityEditor.Experimental;
 using UnityEngine;
 
 public class Unfollow : MonoBehaviour
 {
     public Vector2 cutStartPos;
     public Vector2 cutEndPos;
-    public float minCutDistance;
+    public float minCutDistance; //TODO Move to settings
+    public float maxCutDistance; //TODO Move to settings
+    
+    public float unfollowCooldown; //TODO Move to settings
+    
+    private float unfollowCooldownEndTime = 0;
     
     public bool cutStarted;
 
@@ -16,6 +23,13 @@ public class Unfollow : MonoBehaviour
 
     public void StartCut(Vector2 newCutStartPos)
     {
+        //Is it on cooldown?
+        if (Time.time < unfollowCooldownEndTime)
+        {
+            Debug.Log("Unfollow on cooldown: " + (GetCooldownRemaining()) + " remaining");
+            return;
+        }
+
         cutStarted = true;
         cutStartPos = newCutStartPos;
         
@@ -25,7 +39,6 @@ public class Unfollow : MonoBehaviour
     //Called when the mouse is released after a hold while Unfollow is selected
     public bool EndCut(Vector2 newCutEndPos)
     {
-        
         if (!cutStarted) return false; //Cut hasn't been started, why is one being ended?
         cutEndPos = newCutEndPos;
         
@@ -48,19 +61,36 @@ public class Unfollow : MonoBehaviour
 
         Debug.Log(hits.Length);
         //for each link hit
+        int linksUnfollowed = 0;
         foreach (RaycastHit2D hit in hits)
         {
             Link link = hit.transform.GetComponent<Link>();
 
             if (link)
             {
+                linksUnfollowed++;
                 link.LinkUnfollowed();
             }
         }
-        
+
+        //Start cooldown if at least one link is broken.
+        if (linksUnfollowed > 0)
+        {
+            StartCooldown();
+        }
         ClearCut();
 
         return true;
+    }
+
+    private void StartCooldown()
+    {
+        unfollowCooldownEndTime = Time.time + unfollowCooldown;
+    }
+
+    private float GetCooldownRemaining()
+    {
+        return (unfollowCooldownEndTime - Time.time);
     }
 
     public void ClearCut()
@@ -71,6 +101,16 @@ public class Unfollow : MonoBehaviour
         cutStartPos = Vector3.zero;
         cutEndPos = Vector3.zero;
     }
-    
-    
+
+
+    public void CheckMaxDist(Vector2 mousePos)
+    {
+        if (!cutStarted) return;
+        
+        //Get distance between start and current position
+        float dist = Vector2.Distance(cutStartPos, mousePos);
+
+        //Hit max? End cut
+        if (dist > maxCutDistance) EndCut(mousePos);
+    }
 }

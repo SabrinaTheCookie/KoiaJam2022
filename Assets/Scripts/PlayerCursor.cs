@@ -65,15 +65,22 @@ public class PlayerCursor : MonoBehaviour
                 UseCurrentTool(GetMousePosition());
             }
 
-            //If LMB is released
-            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            //If Unfollow - Also check for release or if its held
+            if (currentTool is CursorTools.Unfollow)
             {
-                if (currentTool is CursorTools.Unfollow)
+                if (Mouse.current.leftButton.wasReleasedThisFrame)
                 {
                     bool toolUsedSuccessfully = unfollower.EndCut(GetMousePosition());
                     if(toolUsedSuccessfully) ChangeTool(CursorTools.Select);
                 }
+
+                if (Mouse.current.leftButton.isPressed)
+                {
+                    unfollower.CheckMaxDist(GetMousePosition());
+                }
             }
+            
+            
         }
     }
 

@@ -839,7 +839,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutStartPos: {x: 0, y: 0}
   cutEndPos: {x: 0, y: 0}
-  minCutDistance: 0
+  minCutDistance: 0.1
+  maxCutDistance: 2.5
+  unfollowCooldown: 10
   cutStarted: 0
   linkLayerMask:
     serializedVersion: 2
