@@ -25,10 +25,17 @@ public class Promote : MonoBehaviour
         if (hitNode.type != NodeType.Misinformed)
         {
             hitNode.NodePromotion();
-            _timeOfCooldown = Time.time;
+            StartCooldown();
+            //Tool is consumed on cursor here
             return true;
         }
 
         return false;
+    }
+
+    public void StartCooldown()
+    {
+        _timeOfCooldown = Time.time;
+        CooldownRadialManager.instance.promoteCooldownRadial.CooldownStarted(cooldownDuration);
     }
 }

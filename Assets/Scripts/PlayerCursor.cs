@@ -1,17 +1,19 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Mime;
 using System.Security.Cryptography.X509Certificates;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 
 public enum CursorTools
 {
-    Promote,
-    Unfollow,
-    Select
+    Promote = 0,
+    Unfollow = 1,
+    Select = 2
 }
 public class PlayerCursor : MonoBehaviour
 {
@@ -22,19 +24,24 @@ public class PlayerCursor : MonoBehaviour
     public Promote promoter;
     public Unfollow unfollower;
 
-    public void Awake()
-    {
-        
-    }
+    
+    
 
     public void ChangeTool(CursorTools newTool)
     {
+        if (currentTool is CursorTools.Unfollow) unfollower.ClearCut();
+        ResetCurrentToolButton();
+        
         currentTool = newTool;
     }
     
     public void ChangeTool(string newTool)
     {
         if (currentTool is CursorTools.Unfollow) unfollower.ClearCut();
+        
+        //new tool button should be set to grey (This is done in editor via UnityEvents on the image game object).
+        
+        ResetCurrentToolButton();
         
         switch (newTool)
         {
@@ -48,6 +55,26 @@ public class PlayerCursor : MonoBehaviour
             
             case "Select":
                 currentTool = CursorTools.Select;
+                break;
+        }
+        
+    }
+
+    private void ResetCurrentToolButton() 
+    {
+        //Deselect button (White)
+        switch (currentTool)
+        {
+            case CursorTools.Promote:
+                CooldownRadialManager.instance.GetRadial((int)CursorTools.Promote).ButtonDeselected();
+                break;
+            
+            case CursorTools.Unfollow:
+                CooldownRadialManager.instance.GetRadial((int)CursorTools.Unfollow).ButtonDeselected();
+                break;
+            
+            case CursorTools.Select:
+                CooldownRadialManager.instance.GetRadial((int)CursorTools.Select).ButtonDeselected();
                 break;
         }
     }
@@ -79,8 +106,6 @@ public class PlayerCursor : MonoBehaviour
                     unfollower.CheckMaxDist(GetMousePosition());
                 }
             }
-            
-            
         }
     }
 
@@ -103,6 +128,7 @@ public class PlayerCursor : MonoBehaviour
 
         if (wasToolUsedSuccessfully)
         {
+            //A click tool was consumed, return to select mode.
             ChangeTool(CursorTools.Select);
         }
     }

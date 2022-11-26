@@ -15,7 +15,7 @@ public class Unfollow : MonoBehaviour
     
     public float unfollowCooldown; //TODO Move to settings
     
-    private float unfollowCooldownEndTime = 0;
+    private float _unfollowCooldownEndTime = 0;
     
     public bool cutStarted;
 
@@ -24,7 +24,7 @@ public class Unfollow : MonoBehaviour
     public void StartCut(Vector2 newCutStartPos)
     {
         //Is it on cooldown?
-        if (Time.time < unfollowCooldownEndTime)
+        if (Time.time < _unfollowCooldownEndTime)
         {
             Debug.Log("Unfollow on cooldown: " + (GetCooldownRemaining()) + " remaining");
             return;
@@ -85,12 +85,14 @@ public class Unfollow : MonoBehaviour
 
     private void StartCooldown()
     {
-        unfollowCooldownEndTime = Time.time + unfollowCooldown;
+        _unfollowCooldownEndTime = Time.time + unfollowCooldown;
+        
+        CooldownRadialManager.instance.unfollowCooldownRadial.CooldownStarted(unfollowCooldown);
     }
 
     private float GetCooldownRemaining()
     {
-        return (unfollowCooldownEndTime - Time.time);
+        return (_unfollowCooldownEndTime - Time.time);
     }
 
     public void ClearCut()
