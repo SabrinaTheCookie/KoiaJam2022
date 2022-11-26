@@ -110,7 +110,7 @@ public class NodeNetworkManager : MonoBehaviour
                     break;
             }
         }
-
+        
         foreach (Node node in AllNodes)
         {
             switch (node.type)
