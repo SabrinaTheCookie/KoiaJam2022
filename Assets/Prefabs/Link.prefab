@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1115277438954990836}
   - component: {fileID: 4906077036483032013}
   - component: {fileID: 7460929676781603657}
+  - component: {fileID: 948404501921816745}
   m_Layer: 3
   m_Name: Link
   m_TagString: Link
@@ -53,6 +54,7 @@ MonoBehaviour:
     m_Bits: 8
   startNode: {fileID: 0}
   endNode: {fileID: 0}
+  linkAngle: 0
 --- !u!212 &4906077036483032013
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73,7 +75,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 2b971d256a474fc46831a8d5c82bfd17, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -98,7 +100,7 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 1
+  m_DrawMode: 0
   m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
@@ -125,9 +127,21 @@ BoxCollider2D:
     oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
-    drawMode: 1
+    drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &948404501921816745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8679571179395481527}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f46493a4da8ffa74fb43b6b4f135e05d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

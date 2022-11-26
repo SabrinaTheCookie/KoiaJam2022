@@ -37,4 +37,15 @@ public class NodeSpriteManager : MonoBehaviour
                 break;
         }
     }
+
+    public Color GetColor(NodeType type)
+    {
+        return type switch
+        {
+            NodeType.Reliable => reliableColorRing,
+            NodeType.Neutral => neutralColorRing,
+            NodeType.Misinformed => misinformedColorRing,
+            _ => new Color(0,0,0)
+        };
+    }
 }

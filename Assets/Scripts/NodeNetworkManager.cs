@@ -75,14 +75,16 @@ public class NodeNetworkManager : MonoBehaviour
         //Generate Reliable Sources
         for (var i = 0; i < gameVars.numReliableSources; i++)
         {
-            AllNodes[i].ChangeNodeType(NodeType.Reliable);
+            AllNodes[i].influence = -10;
+            AllNodes[i].CheckPower();
             MakeNodeSource(AllNodes[i], gameVars.defaultReliablePower);
         }
 
         //Generate Misinformed Sources
         for (var i = NumberNodes() - 1; i >= NumberNodes() - gameVars.numBadSources; i--)
         {
-            AllNodes[i].ChangeNodeType(NodeType.Misinformed);
+            AllNodes[i].influence = 10;
+            AllNodes[i].CheckPower();
             MakeNodeSource(AllNodes[i], gameVars.defaultMisinformationPower);
         }
     }

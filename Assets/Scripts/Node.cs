@@ -33,7 +33,7 @@ public class Node : MonoBehaviour
     public InformationSource Source { get; set; }
 
     //Node changed type
-    public void ChangeNodeType(NodeType newType)
+    private void ChangeNodeType(NodeType newType)
     {
         type = newType;
         NodeTypeChanged?.Invoke(newType, this);
@@ -110,12 +110,14 @@ public class Node : MonoBehaviour
         {
             // This node is now influenced by bad information. RIP
             ChangeNodeType(NodeType.Misinformed);
+            influence = 10;
         }
 
         if (influence <= -10)
         {
             // We have become a spreader of truths.
             ChangeNodeType(NodeType.Reliable);
+            influence = -10;
         }
 
         if (type is NodeType.Misinformed or NodeType.Reliable && influence is < 5 and > -5)

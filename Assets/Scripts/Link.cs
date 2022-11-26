@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using Mono.Cecil;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Link : MonoBehaviour
 {
@@ -15,9 +12,19 @@ public class Link : MonoBehaviour
     public Node endNode;
 
     public float linkAngle;
-    public void Start()
+
+    private LinkColorGradient _lcg;
+    private LinkColorManager _lcmRef;
+
+    private void Awake()
     {
-        
+        _lcg = GetComponent<LinkColorGradient>();
+        _lcmRef = FindObjectOfType<LinkColorManager>();
+    }
+
+    public void Update()
+    {
+        _lcmRef.UpdateGradient(this, _lcg);
     }
 
     public void SetupLink(Node newStartNode, Node newEndNode)
@@ -62,7 +69,7 @@ public class Link : MonoBehaviour
 
     private void CheckLinkCollisions()
     {
-        //TODO Stop overlaps - This still isnt working :(
+        //TODO Stop overlaps - This still isn't working :(
         
         //Check overlap - if overlapping, destroy this link and undo the connection (That has been established)
         
@@ -104,9 +111,9 @@ public class Link : MonoBehaviour
         float linkLength = linkDirection.magnitude;
         
         //Remove the radius of nodes from the length of the link.
-        linkLength -= startNode.transform.localScale.magnitude / 2;
+        linkLength -= startNode.transform.localScale.magnitude * 1.3f / 2f;
         
-        transform.localScale = new Vector3(.1f, linkLength, 1);
+        transform.localScale = new Vector3(.075f, linkLength, 1);
     }
 
     private void SetLinkAngle(Vector3 linkDirection)
@@ -139,7 +146,7 @@ public class Link : MonoBehaviour
         
     }
 
-    public void LinkRefollowed()
+    private void LinkRefollowed()
     {
         Debug.Log("Link Re-enabled");
         

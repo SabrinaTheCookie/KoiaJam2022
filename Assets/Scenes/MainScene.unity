@@ -280,6 +280,7 @@ GameObject:
   m_Component:
   - component: {fileID: 452407787}
   - component: {fileID: 452407786}
+  - component: {fileID: 452407788}
   m_Layer: 0
   m_Name: SpriteManager
   m_TagString: Untagged
@@ -320,6 +321,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452407788
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452407785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47187721ff23967458b4f476cb41e523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nodeSpriteManager: {fileID: 452407786}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,7 +1344,7 @@ GameObject:
   - component: {fileID: 1907685154}
   - component: {fileID: 1907685153}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: UICanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1609,6 +1623,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 904429426}
+    - target: {fileID: 8726121596423450802, guid: ab75c1fb8eff9b14bac863f1bce3f9c4, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8726121596423450803, guid: ab75c1fb8eff9b14bac863f1bce3f9c4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
