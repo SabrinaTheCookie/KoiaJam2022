@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NodeNetworkManager : MonoBehaviour
@@ -120,13 +121,10 @@ public class NodeNetworkManager : MonoBehaviour
         {
             node.CheckPower();
         }
+    }
 
-        // Every node should be checked: 
-        // Source nodes: tick time towards next spread based on power and time. Check if source parent is still a source
-
-        // When a source node timer ticks over, we spread to all adjacent nodes (check that they are not same type source nodes) 1 power
-        // Reset source node timer and check the neutral nodes if they will become sources or not. Add a source parent once sourced. 
-
-        // When something changes in the node we handle that separately to this logic - i.e. by changing the threshold for the node spread
+    public bool CheckAllNodesOfType(NodeType type)
+    {
+        return AllNodes.All(node => node.type == type);
     }
 }
