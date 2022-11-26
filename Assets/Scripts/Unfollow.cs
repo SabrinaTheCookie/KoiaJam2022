@@ -39,7 +39,7 @@ public class Unfollow : MonoBehaviour
         if (!cutStarted) return false; //Cut hasn't been started, why is one being ended?
         cutEndPos = newCutEndPos;
         
-        Debug.Log("Unfollow Cut Ended");
+        Debug.Log("Unfollow Cut Ended");    
         //If cursor position is closer than minCutDistance on cursor deselect, deselect the cut
         float distance = Vector2.Distance(cutStartPos, cutEndPos);
         if (distance < minCutDistance)

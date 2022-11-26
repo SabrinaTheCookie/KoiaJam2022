@@ -1,9 +1,15 @@
+using System;
 using UnityEngine;
 
 public class Promote : MonoBehaviour
 {
     public float cooldownDuration;
     private float _timeOfCooldown;
+
+    private void Awake()
+    {
+        _timeOfCooldown = Time.time - cooldownDuration;
+    }
 
     public bool PromoteNodeAtPosition(Vector2 mousePos)
     {

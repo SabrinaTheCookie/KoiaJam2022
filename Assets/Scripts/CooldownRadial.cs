@@ -3,7 +3,6 @@ using UnityEngine.UI;
 
 public class CooldownRadial : MonoBehaviour
 {
-
     public Image cooldownOverlayImage;
     public bool isCoolingDown;
 

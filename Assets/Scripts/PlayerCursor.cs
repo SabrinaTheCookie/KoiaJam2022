@@ -25,6 +25,13 @@ public class PlayerCursor : MonoBehaviour
     
     public void ChangeTool(string newTool)
     {
+        if (newTool == "Promote" && currentTool == CursorTools.Promote || 
+            newTool == "Unfollow" && currentTool == CursorTools.Unfollow)
+        {
+            // Turn the tool off and cancel the usage
+            ResetCurrentToolButton();
+            return;
+        }
         if (currentTool is CursorTools.Unfollow) unfollower.ClearCut();
         
         //new tool button should be set to grey (This is done in editor via UnityEvents on the image game object).
