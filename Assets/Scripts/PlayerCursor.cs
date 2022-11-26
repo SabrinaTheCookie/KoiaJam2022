@@ -30,22 +30,14 @@ public class PlayerCursor : MonoBehaviour
         //new tool button should be set to grey (This is done in editor via UnityEvents on the image game object).
         
         ResetCurrentToolButton();
-        
-        switch (newTool)
+
+        currentTool = newTool switch
         {
-            case "Promote":
-                currentTool = CursorTools.Promote;
-                break;
-            
-            case "Unfollow":
-                currentTool = CursorTools.Unfollow;
-                break;
-            
-            case "Select":
-                currentTool = CursorTools.Select;
-                break;
-        }
-        
+            "Promote" => CursorTools.Promote,
+            "Unfollow" => CursorTools.Unfollow,
+            "Select" => CursorTools.Select,
+            _ => currentTool
+        };
     }
 
     private void ResetCurrentToolButton() 
