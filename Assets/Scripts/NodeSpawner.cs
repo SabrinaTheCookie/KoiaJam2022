@@ -68,6 +68,7 @@ public class NodeSpawner : MonoBehaviour
     {
         GameObject node = Instantiate(nodePrefab, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
         node.transform.localScale = new Vector3(nodeSizeMult, nodeSizeMult, 1);
+
         NewNode?.Invoke(node.GetComponent<Node>());
     }
 

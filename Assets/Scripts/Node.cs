@@ -125,14 +125,16 @@ public class Node : MonoBehaviour
         connectedNodes.Remove(endNode);
     }
     
-    public void IncreaseInfluence()
+    public void NodePromotion()
     {
-        influence++;
+        //TODO add promotions
+        Debug.Log(transform.position + " has been promoted!");
+
     }
 
-    public void DecreaseInfluence()
+    public void NodeDemotion()
     {
-        influence--;
+        Debug.Log(transform.position + " has been demoted!");
     }
 }
 

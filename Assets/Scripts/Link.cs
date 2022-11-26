@@ -16,7 +16,7 @@ public class Link : MonoBehaviour
     public float linkAngle;
     public void Start()
     {
-        //CheckLinkCollisions();
+        
     }
 
     public void SetupLink(Node newStartNode, Node newEndNode)
@@ -61,10 +61,9 @@ public class Link : MonoBehaviour
 
     private void CheckLinkCollisions()
     {
-        //TODO Stop overlaps
+        //TODO Stop overlaps - This still isnt working :(
         
         //Check overlap - if overlapping, destroy this link and undo the connection (That has been established)
-        
         
         //Get all overlapping links
         //This angle seems to be incorrect some of the time? Maybe only on objects on the right side (x > 0)
