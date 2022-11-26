@@ -159,6 +159,18 @@ public class Node : MonoBehaviour
     {
         return connectedNodes.Count(node => node.type != nodeType);
     }
+
+    public void TemporaryDisconnect(Node pairNode)
+    {
+        // Here we want to disconnect these two nodes temporarily so they must dereference each other
+        connectedNodes.Remove(pairNode);
+    }
+    
+    public void ManuallyReconnect(Node pairNode)
+    {
+        // Here we want to disconnect these two nodes temporarily so they must dereference each other
+        connectedNodes.Add(pairNode);
+    }
 }
 
 public class ComparisonX : IComparer<Node>

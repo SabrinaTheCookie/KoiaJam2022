@@ -16,10 +16,13 @@ public class Link : MonoBehaviour
     private LinkColorGradient _lcg;
     private LinkColorManager _lcmRef;
 
+    private SpriteRenderer _spriteRenderer;
+
     private void Awake()
     {
         _lcg = GetComponent<LinkColorGradient>();
         _lcmRef = FindObjectOfType<LinkColorManager>();
+        _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     public void Update()
@@ -136,11 +139,11 @@ public class Link : MonoBehaviour
         Debug.Log("Link Broken!");
         
         //VFX for broken link ENABLED
-        GetComponent<SpriteRenderer>().color = Color.grey;
+        _spriteRenderer.color = Color.grey;
         
-        //Disable start node
-        
-        //Disable end node
+        //Disable start and end nodes
+        startNode.TemporaryDisconnect(endNode);
+        endNode.TemporaryDisconnect(startNode);
 
         StartCoroutine(ERefollow());
         
@@ -149,16 +152,16 @@ public class Link : MonoBehaviour
     private void LinkRefollowed()
     {
         Debug.Log("Link Re-enabled");
-        
+
         //VFX for broken link DISABLED
-        GetComponent<SpriteRenderer>().color = Color.white;
-        
-        //Enable start node
-        
-        //Enable end node
+        _spriteRenderer.color = Color.white;
+
+        //Re-enable nodes
+        startNode.ManuallyReconnect(endNode);
+        endNode.ManuallyReconnect(startNode);
     }
 
-    public IEnumerator ERefollow()
+    private IEnumerator ERefollow()
     {
         //Wait refollow duration
         yield return new WaitForSeconds(GameController.Instance.GameVariables.linkRefollowDuration);
