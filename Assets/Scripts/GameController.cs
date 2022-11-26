@@ -29,6 +29,7 @@ public class GameController : MonoBehaviour
         // Set up game world
         Instantiate(nnmPrefab, Vector3.zero, Quaternion.identity);
         Instantiate(nodeSpawnerPrefab, Vector3.zero, Quaternion.identity);
+        
         StartGame?.Invoke(GameVariables);
     }
 }

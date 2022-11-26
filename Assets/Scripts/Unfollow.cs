@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 
 public class Unfollow : MonoBehaviour
 {
+    public static event Action CutNodes;
+    
     public Vector2 cutStartPos;
     public Vector2 cutEndPos;
     public float minCutDistance; //TODO Move to settings
@@ -71,6 +74,7 @@ public class Unfollow : MonoBehaviour
         if (linksUnfollowed > 0)
         {
             StartCooldown();
+            CutNodes?.Invoke();
         }
         ClearCut();
 

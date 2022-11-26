@@ -13,7 +13,6 @@ public enum NodeType
 
 public class Node : MonoBehaviour
 {
-    public static event Action CutNode;
     public static event Action<NodeType, Node> NodeTypeChanged;
 
     //TODO move link prefab to manager

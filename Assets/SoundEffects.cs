@@ -18,6 +18,12 @@ public class SoundEffects : MonoBehaviour
     private void OnEnable()
     {
         GameController.StartGame += RegisterForNodeChanges;
+        Unfollow.CutNodes += PlayCutAudio;
+    }
+
+    private void PlayCutAudio()
+    {
+        _audioSource.PlayOneShot(cutSound);
     }
 
     private void RegisterForNodeChanges(GameVars gv)
