@@ -21,7 +21,10 @@ public class NodeNetworkManager : MonoBehaviour
         }
         else
         {
-            MakeNodeSource(node, node.influenceSource.Source.informationPower);
+            MakeNodeSource(node,
+                !node.influenceSource
+                    ? GameController.Instance.GameVariables.defaultReliablePower
+                    : node.influenceSource.Source.informationPower);
         }
     }
 
