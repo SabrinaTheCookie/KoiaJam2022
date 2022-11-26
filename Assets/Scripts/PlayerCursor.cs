@@ -10,17 +10,18 @@ using UnityEngine.InputSystem;
 public enum CursorTools
 {
     Promote,
-    Cut,
+    Unfollow,
     Select
 }
 public class PlayerCursor : MonoBehaviour
 {
+    
     public PlayerInput playerInput;
     public CursorTools currentTool = CursorTools.Select;
 
     public Promote promoter;
     public Unfollow unfollower;
-    
+
     public void Awake()
     {
         
@@ -33,14 +34,16 @@ public class PlayerCursor : MonoBehaviour
     
     public void ChangeTool(string newTool)
     {
+        if (currentTool is CursorTools.Unfollow) unfollower.ClearCut();
+        
         switch (newTool)
         {
             case "Promote":
                 currentTool = CursorTools.Promote;
                 break;
             
-            case "Cut":
-                currentTool = CursorTools.Cut;
+            case "Unfollow":
+                currentTool = CursorTools.Unfollow;
                 break;
             
             case "Select":
@@ -55,10 +58,21 @@ public class PlayerCursor : MonoBehaviour
         if (currentTool is not CursorTools.Select)
         {
             //TODO Remove from every frame & Include touch screen support
+            
             //If LMB is pressed
             if (Mouse.current.leftButton.wasPressedThisFrame)
             {
-                Click();
+                UseCurrentTool(GetMousePosition());
+            }
+
+            //If LMB is released
+            if (Mouse.current.leftButton.wasReleasedThisFrame)
+            {
+                if (currentTool is CursorTools.Unfollow)
+                {
+                    bool toolUsedSuccessfully = unfollower.EndCut(GetMousePosition());
+                    if(toolUsedSuccessfully) ChangeTool(CursorTools.Select);
+                }
             }
         }
     }
@@ -69,8 +83,9 @@ public class PlayerCursor : MonoBehaviour
         
         switch (currentTool)
         {
-            case CursorTools.Cut:
-                wasToolUsedSuccessfully = unfollower.StartCut(mouseClickPos);
+            case CursorTools.Unfollow:
+                unfollower.StartCut(mouseClickPos);
+                //Keep looking for mouse up
                 break;
             case CursorTools.Promote:
                 wasToolUsedSuccessfully = promoter.PromoteNodeAtPosition(mouseClickPos);
@@ -85,7 +100,7 @@ public class PlayerCursor : MonoBehaviour
         }
     }
 
-    public void Click()
+    public Vector2 GetMousePosition()
     {
         //Get mouse position
         Vector2 mouseClickPos = Mouse.current.position.ReadValue();
@@ -93,7 +108,6 @@ public class PlayerCursor : MonoBehaviour
         //Convert to world coords and set
         mouseClickPos = Camera.main.ScreenToWorldPoint(mouseClickPos);
 
-        UseCurrentTool(mouseClickPos);
-
+        return mouseClickPos;
     }
 }
