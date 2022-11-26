@@ -6,9 +6,8 @@ public class CooldownRadialManager : MonoBehaviour
 
     public CooldownRadial promoteCooldownRadial; 
     public CooldownRadial unfollowCooldownRadial; 
-    public CooldownRadial verifyCooldownRadial; 
-    public CooldownRadial selectCooldownRadial; 
-    
+    public CooldownRadial verifyCooldownRadial;
+
     public void Awake()
     {
         if (instance)
@@ -25,7 +24,6 @@ public class CooldownRadialManager : MonoBehaviour
         promoteCooldownRadial.ResetRadial();
         unfollowCooldownRadial.ResetRadial();
         verifyCooldownRadial.ResetRadial();
-        selectCooldownRadial.ResetRadial();
     }
 
     private void OnDisable()
@@ -40,7 +38,6 @@ public class CooldownRadialManager : MonoBehaviour
             0 => promoteCooldownRadial,
             1 => unfollowCooldownRadial,
             2 => verifyCooldownRadial,
-            3 => selectCooldownRadial,
             _ => promoteCooldownRadial
         };
 

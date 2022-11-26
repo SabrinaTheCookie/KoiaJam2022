@@ -71,10 +71,6 @@ public class PlayerCursor : MonoBehaviour
             case CursorTools.Verify:
                 CooldownRadialManager.instance.GetRadial((int)CursorTools.Verify).ButtonDeselected();
                 break;
-            
-            case CursorTools.Select:
-                CooldownRadialManager.instance.GetRadial((int)CursorTools.Select).ButtonDeselected();
-                break;
         }
     }
 
