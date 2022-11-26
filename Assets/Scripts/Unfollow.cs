@@ -1,9 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
-using UnityEditor.Experimental;
 using UnityEngine;
 
 public class Unfollow : MonoBehaviour

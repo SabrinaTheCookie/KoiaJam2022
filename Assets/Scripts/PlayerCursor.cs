@@ -1,13 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Net.Mime;
-using System.Security.Cryptography.X509Certificates;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
-
 
 public enum CursorTools
 {
@@ -17,15 +9,11 @@ public enum CursorTools
 }
 public class PlayerCursor : MonoBehaviour
 {
-    
     public PlayerInput playerInput;
     public CursorTools currentTool = CursorTools.Select;
 
     public Promote promoter;
     public Unfollow unfollower;
-
-    
-    
 
     public void ChangeTool(CursorTools newTool)
     {
@@ -109,7 +97,7 @@ public class PlayerCursor : MonoBehaviour
         }
     }
 
-    public void UseCurrentTool(Vector2 mouseClickPos)
+    private void UseCurrentTool(Vector2 mouseClickPos)
     {
         bool wasToolUsedSuccessfully = false;
         
@@ -133,7 +121,7 @@ public class PlayerCursor : MonoBehaviour
         }
     }
 
-    public Vector2 GetMousePosition()
+    private static Vector2 GetMousePosition()
     {
         //Get mouse position
         Vector2 mouseClickPos = Mouse.current.position.ReadValue();

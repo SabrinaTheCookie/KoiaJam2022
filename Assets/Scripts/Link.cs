@@ -154,7 +154,7 @@ public class Link : MonoBehaviour
     public IEnumerator ERefollow()
     {
         //Wait refollow duration
-        yield return new WaitForSeconds(GameController.Instance.GameVariables.LinkRefollowDuration);
+        yield return new WaitForSeconds(GameController.Instance.GameVariables.linkRefollowDuration);
         
         //Timer done! LET THE INFORMATION FLOW!
         LinkRefollowed();

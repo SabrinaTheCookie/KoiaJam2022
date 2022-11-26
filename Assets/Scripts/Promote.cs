@@ -33,7 +33,7 @@ public class Promote : MonoBehaviour
         return false;
     }
 
-    public void StartCooldown()
+    private void StartCooldown()
     {
         _timeOfCooldown = Time.time;
         CooldownRadialManager.instance.promoteCooldownRadial.CooldownStarted(cooldownDuration);

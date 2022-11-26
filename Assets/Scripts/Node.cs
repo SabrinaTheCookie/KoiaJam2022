@@ -141,7 +141,6 @@ public class Node : MonoBehaviour
     }
 }
 
-
 public class ComparisonX : IComparer<Node>
 {
     public int Compare(Node x, Node y)
