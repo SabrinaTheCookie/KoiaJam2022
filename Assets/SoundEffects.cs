@@ -1,18 +1,43 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundEffects : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private AudioSource _audioSource;
+    [SerializeField] private AudioClip buttonClick;
+    [SerializeField] private AudioClip promoteNode;
+    [SerializeField] private AudioClip nodeGoBad;
+    [SerializeField] private AudioClip nodeGoNeutral;
+    [SerializeField] private AudioClip nodeGoGood;
+    [SerializeField] private AudioClip cutSound;
+
+    private void Awake()
     {
-        
+        _audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        GameController.StartGame += RegisterForNodeChanges;
+    }
+
+    private void RegisterForNodeChanges(GameVars gv)
+    {
+        Node.NodeTypeChanged += PlayNodeChangedAudio;
+    }
+
+    private void PlayNodeChangedAudio(NodeType type, Node node)
+    {
+        _audioSource.PlayOneShot(type switch
+        {
+            NodeType.Misinformed => nodeGoBad,
+            NodeType.Neutral => nodeGoNeutral,
+            NodeType.Reliable => nodeGoGood,
+            _ => null
+        });
+    }
+
+    private void OnDisable()
+    {
+        Node.NodeTypeChanged -= PlayNodeChangedAudio;
     }
 }

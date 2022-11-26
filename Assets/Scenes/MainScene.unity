@@ -132,8 +132,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8676761}
-  - component: {fileID: 8676763}
   - component: {fileID: 8676762}
+  - component: {fileID: 8676763}
   m_Layer: 0
   m_Name: SFXManager
   m_TagString: Untagged
@@ -168,6 +168,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b82c4804df6f2d5478cbc974a1ba362e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  buttonClick: {fileID: 8300000, guid: 4c3791c30bb2c9d4daa82124a32ad48e, type: 3}
+  promoteNode: {fileID: 8300000, guid: c4b031ba502a3294d975699a889ba7e3, type: 3}
+  nodeGoBad: {fileID: 8300000, guid: 972ef4b881df9c24097e38b59e4d678b, type: 3}
+  nodeGoNeutral: {fileID: 8300000, guid: 7e73473291fc0254789579fbef8670d1, type: 3}
+  nodeGoGood: {fileID: 8300000, guid: 6423b72bc7ba03c438ab993b114b620b, type: 3}
 --- !u!82 &8676763
 AudioSource:
   m_ObjectHideFlags: 0
@@ -179,8 +184,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -676,7 +681,7 @@ MonoBehaviour:
     maxDefaultNodeConnections: 3
     defaultReliablePower: 3
     defaultMisinformationPower: 5
-    LinkRefollowDuration: 20
+    linkRefollowDuration: 20
   nnmPrefab: {fileID: 1893234062359824775, guid: 4a5a4c8b878725d4aa9d225d2ff0064a, type: 3}
 --- !u!4 &725316415
 Transform:
