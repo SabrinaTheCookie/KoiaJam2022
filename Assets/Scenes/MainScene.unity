@@ -663,6 +663,7 @@ MonoBehaviour:
     maxDefaultNodeConnections: 3
     defaultReliablePower: 3
     defaultMisinformationPower: 5
+    LinkRefollowDuration: 5
   nnmPrefab: {fileID: 1893234062359824775, guid: 4a5a4c8b878725d4aa9d225d2ff0064a, type: 3}
 --- !u!4 &725316415
 Transform:
@@ -840,6 +841,9 @@ MonoBehaviour:
   cutEndPos: {x: 0, y: 0}
   minCutDistance: 0
   cutStarted: 0
+  linkLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &1035829334
 GameObject:
   m_ObjectHideFlags: 0

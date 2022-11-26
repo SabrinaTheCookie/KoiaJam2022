@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -121,6 +122,44 @@ public class Link : MonoBehaviour
         
         //Rotate
         transform.Rotate(0,0, linkAngle);
+    }
+
+    public void LinkUnfollowed()
+    {
+        Debug.Log("Link Broken!");
+        
+        //VFX for broken link ENABLED
+        GetComponent<SpriteRenderer>().color = Color.grey;
+        
+        //Disable start node
+        
+        //Disable end node
+
+        StartCoroutine(ERefollow());
+        
+    }
+
+    public void LinkRefollowed()
+    {
+        Debug.Log("Link Re-enabled");
+        
+        //VFX for broken link DISABLED
+        GetComponent<SpriteRenderer>().color = Color.white;
+        
+        //Enable start node
+        
+        //Enable end node
+    }
+
+    public IEnumerator ERefollow()
+    {
+        //Wait refollow duration
+        yield return new WaitForSeconds(GameController.Instance.GameVariables.LinkRefollowDuration);
+        
+        //Timer done! LET THE INFORMATION FLOW!
+        LinkRefollowed();
+        
+        yield return null;
     }
 
     private void OnDrawGizmos()

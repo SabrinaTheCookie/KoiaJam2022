@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography.X509Certificates;
@@ -10,8 +11,9 @@ public class Unfollow : MonoBehaviour
     public float minCutDistance;
     
     public bool cutStarted;
-    
-    
+
+    public LayerMask linkLayerMask;
+
     public void StartCut(Vector2 newCutStartPos)
     {
         cutStarted = true;
@@ -28,9 +30,9 @@ public class Unfollow : MonoBehaviour
         cutEndPos = newCutEndPos;
         
         Debug.Log("Unfollow Cut Ended");
-        
         //If cursor position is closer than minCutDistance on cursor deselect, deselect the cut
-        if (Vector2.Distance(cutStartPos, cutEndPos) < minCutDistance)
+        float distance = Vector2.Distance(cutStartPos, cutEndPos);
+        if (distance < minCutDistance)
         {
             Debug.Log("Distance was too short! Unfollow cut failed");
             return false;
@@ -39,7 +41,22 @@ public class Unfollow : MonoBehaviour
         //Valid line, the misinformation has been sealed forever... haha jk... unless..?
         Debug.DrawLine(cutStartPos, cutEndPos, Color.red, Mathf.Infinity);
         
-        
+        //Links are on Z:5
+        Vector3 offset = new Vector3(0, 0, 5);
+        //Check for link collisions
+        RaycastHit2D[] hits = Physics2D.RaycastAll(cutStartPos, cutEndPos - cutStartPos, distance, linkLayerMask, 0, 6);
+
+        Debug.Log(hits.Length);
+        //for each link hit
+        foreach (RaycastHit2D hit in hits)
+        {
+            Link link = hit.transform.GetComponent<Link>();
+
+            if (link)
+            {
+                link.LinkUnfollowed();
+            }
+        }
         
         ClearCut();
 
