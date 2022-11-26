@@ -26,6 +26,8 @@ public class Node : MonoBehaviour
     public Node influenceSource;
 
     private TMP_Text _debugText;
+    [SerializeField] private GameObject circleObject;
+    public SpriteRenderer circleSprite;
 
     public InformationSource Source { get; set; }
 
@@ -65,9 +67,11 @@ public class Node : MonoBehaviour
 
     private void Awake()
     {
+        _debugText = GetComponentInChildren<TMP_Text>();
+        circleSprite = circleObject.GetComponent<SpriteRenderer>();
+
         //All nodes start as Neutral
         ChangeNodeType(NodeType.Neutral);
-        _debugText = GetComponentInChildren<TMP_Text>();
     }
 
     public void FindConnections(int maxConnections)
@@ -124,7 +128,7 @@ public class Node : MonoBehaviour
     {
         connectedNodes.Remove(endNode);
     }
-    
+
     public void NodePromotion()
     {
         influence -= 10;
