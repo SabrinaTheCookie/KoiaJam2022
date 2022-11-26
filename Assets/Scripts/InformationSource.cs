@@ -13,7 +13,8 @@ public class InformationSource : MonoBehaviour
     private float _timeToBeVerifiedFor;
     private float _timeVerified;
 
-    [Header("Tick and Spread")] private float _timeSinceLastSpread;
+    [Header("Tick and Spread")]
+    private float _timeSinceLastSpread;
     private float _spreadTime;
 
     public void Attach(Node node, int power)
@@ -29,7 +30,7 @@ public class InformationSource : MonoBehaviour
     private void CalculateSpreadTime()
     {
         var nodesConnectedTo = _nodeAttachedTo.GetNumConnectedNodesNotOfType(sourceType);
-        
+
         // Spread time is the power * numb of connected nodes
         _spreadTime = nodesConnectedTo * informationPower;
     }
@@ -53,8 +54,8 @@ public class InformationSource : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private void SpreadPower()
     {
-        Debug.Log("node at position " + _nodeAttachedTo.transform.position + " spread power to " +
-                  _nodeAttachedTo.connectedNodes.Count + " nodes.");
+        Debug.Log("node" + _nodeAttachedTo.name + " spread power to " +
+                  _nodeAttachedTo.GetNumConnectedNodesNotOfType(sourceType) + " nodes.");
 
         // For every connected node that is not the parent node, if it is neutral, spread the power to it.
         foreach (Node node in _nodeAttachedTo.connectedNodes)

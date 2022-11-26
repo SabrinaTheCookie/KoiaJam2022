@@ -14,6 +14,8 @@ public class NodeNetworkManager : MonoBehaviour
 
     private static void ChangeNodeType(NodeType type, Node node)
     {
+        if (!node) return;
+        
         if (type == NodeType.Neutral)
         {
             Destroy(node.Source);
@@ -22,7 +24,7 @@ public class NodeNetworkManager : MonoBehaviour
         else
         {
             MakeNodeSource(node,
-                !node.influenceSource
+                !node.influenceSource || !node.influenceSource.Source
                     ? GameController.Instance.GameVariables.defaultReliablePower
                     : node.influenceSource.Source.informationPower);
         }
@@ -108,19 +110,15 @@ public class NodeNetworkManager : MonoBehaviour
             {
                 case NodeType.Reliable:
                 case NodeType.Misinformed:
+                    if (!node.Source) break;
                     node.Source.AddTime(tick);
                     break;
             }
         }
-        
+
         foreach (Node node in AllNodes)
         {
-            switch (node.type)
-            {
-                case NodeType.Neutral:
-                    node.CheckPower();
-                    break;
-            }
+            node.CheckPower();
         }
 
         // Every node should be checked: 

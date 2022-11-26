@@ -105,15 +105,14 @@ public class Node : MonoBehaviour
 
     public void CheckPower()
     {
-        _debugText.text = influence.ToString();
-        if (influence >= 10)
+        if (influence >= 10 && type != NodeType.Misinformed)
         {
             // This node is now influenced by bad information. RIP
             ChangeNodeType(NodeType.Misinformed);
             influence = 10;
         }
 
-        if (influence <= -10)
+        if (influence <= -10 && type != NodeType.Reliable)
         {
             // We have become a spreader of truths.
             ChangeNodeType(NodeType.Reliable);
@@ -125,6 +124,8 @@ public class Node : MonoBehaviour
             // Slowly changing our ways
             ChangeNodeType(NodeType.Neutral);
         }
+        
+        _debugText.text = influence.ToString();
     }
 
     public void BreakConnection(Node endNode)
