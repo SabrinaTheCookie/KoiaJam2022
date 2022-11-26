@@ -1,4 +1,5 @@
 using System;
+using Mono.Cecil;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -11,7 +12,13 @@ public class Link : MonoBehaviour
     
     public Node startNode;
     public Node endNode;
-    
+
+    public float linkAngle;
+    public void Start()
+    {
+        //CheckLinkCollisions();
+    }
+
     public void SetupLink(Node newStartNode, Node newEndNode)
     {
         //Find Components
@@ -56,29 +63,23 @@ public class Link : MonoBehaviour
     {
         //TODO Stop overlaps
         
-        //Also hitting nodes...
         //Check overlap - if overlapping, destroy this link and undo the connection (That has been established)
-        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, transform.localScale, transform.rotation.z, linkLayerMask);
         
-
-        Debug.Log(hits.Length);
+        
+        //Get all overlapping links
+        //This angle seems to be incorrect some of the time? Maybe only on objects on the right side (x > 0)
+        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, transform.localScale, 0);
+        
         foreach (Collider2D hit in hits)
         {
-            Debug.Log(hit.tag);
-            if (!hit)
-            {
-                Debug.Log("No overlaps found");
-                return;
-            }
 
             if (!hit.CompareTag("Link"))
             {
-                Debug.Log("No overlap with links found");
+                Debug.Log("No overlap with links found, but collided with a Node");
                 return;
             }
 
             Debug.Log("Overlap found at - " + transform.position);
-            
             
             BreakConnection();
         }
@@ -110,15 +111,23 @@ public class Link : MonoBehaviour
 
     private void SetLinkAngle(Vector3 linkDirection)
     {
+        //Get angle of link direction
         var angle = Vector2.Angle(new Vector2(0.0f, 1.0f), new Vector2(linkDirection.x, linkDirection.y));
+        
+        // if facing (Correct logic?) right, inverse the angle.
         if (linkDirection.x > 0.0f) angle = 360.0f - angle;
-        transform.Rotate(0,0, angle);
+        
+        //Save angle
+        linkAngle = angle;
+        
+        //Rotate
+        transform.Rotate(0,0, linkAngle);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.color = Color.red;
+        Gizmos.matrix = transform.localToWorldMatrix;
         Gizmos.DrawWireCube(Vector3.zero, Vector3.one);
     }
 }

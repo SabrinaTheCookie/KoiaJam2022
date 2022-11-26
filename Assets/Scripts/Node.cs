@@ -124,7 +124,18 @@ public class Node : MonoBehaviour
     {
         connectedNodes.Remove(endNode);
     }
+    
+    public void IncreaseInfluence()
+    {
+        influence++;
+    }
+
+    public void DecreaseInfluence()
+    {
+        influence--;
+    }
 }
+
 
 public class ComparisonX : IComparer<Node>
 {
