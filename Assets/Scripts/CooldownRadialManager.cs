@@ -6,9 +6,8 @@ public class CooldownRadialManager : MonoBehaviour
 
     public CooldownRadial promoteCooldownRadial; 
     public CooldownRadial unfollowCooldownRadial; 
-    public CooldownRadial verifyCooldownRadial; 
-    public CooldownRadial selectCooldownRadial; 
-    
+    public CooldownRadial verifyCooldownRadial;
+
     public void Awake()
     {
         if (instance)
@@ -17,6 +16,19 @@ public class CooldownRadialManager : MonoBehaviour
             return;
         }
         instance = this;
+        GameController.StopGame += ResetRadials;
+    }
+
+    private void ResetRadials()
+    {
+        promoteCooldownRadial.ResetRadial();
+        unfollowCooldownRadial.ResetRadial();
+        verifyCooldownRadial.ResetRadial();
+    }
+
+    private void OnDisable()
+    {
+        GameController.StopGame -= ResetRadials;
     }
 
     public CooldownRadial GetRadial(int button)
@@ -26,7 +38,6 @@ public class CooldownRadialManager : MonoBehaviour
             0 => promoteCooldownRadial,
             1 => unfollowCooldownRadial,
             2 => verifyCooldownRadial,
-            3 => selectCooldownRadial,
             _ => promoteCooldownRadial
         };
 

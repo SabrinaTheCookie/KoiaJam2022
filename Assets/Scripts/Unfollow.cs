@@ -113,4 +113,19 @@ public class Unfollow : MonoBehaviour
         //Hit max? End cut
         if (dist > maxCutDistance) EndCut(mousePos);
     }
+    
+    private void OnEnable()
+    {
+        GameController.StopGame += GameReset;
+    }
+
+    private void GameReset()
+    {
+        _unfollowCooldownEndTime = Time.time;
+    }
+
+    private void OnDisable()
+    {
+        GameController.StopGame -= GameReset;
+    }
 }

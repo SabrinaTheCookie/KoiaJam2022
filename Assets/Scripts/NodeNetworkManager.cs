@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class NodeNetworkManager : MonoBehaviour
@@ -11,12 +12,18 @@ public class NodeNetworkManager : MonoBehaviour
     {
         NodeSpawner.NewNode += AddNode;
         GameController.StartGame += StartLogic;
+        GameController.StopGame += GameControllerOnStopGame;
+    }
+
+    private void GameControllerOnStopGame()
+    {
+        _startTicking = false;
     }
 
     private static void ChangeNodeType(NodeType type, Node node)
     {
         if (!node) return;
-        
+
         if (type == NodeType.Neutral)
         {
             Destroy(node.Source);
@@ -36,6 +43,7 @@ public class NodeNetworkManager : MonoBehaviour
         NodeSpawner.NewNode -= AddNode;
         GameController.StartGame -= StartLogic;
         Node.NodeTypeChanged -= ChangeNodeType;
+        GameController.StopGame -= GameControllerOnStopGame;
     }
 
     private void Awake()
@@ -169,16 +177,14 @@ public class NodeNetworkManager : MonoBehaviour
 
         foreach (Node node in AllNodes)
         {
+            if (!_startTicking) break;
             node.CheckPower();
         }
+    }
 
-        // Every node should be checked: 
-        // Source nodes: tick time towards next spread based on power and time. Check if source parent is still a source
-
-        // When a source node timer ticks over, we spread to all adjacent nodes (check that they are not same type source nodes) 1 power
-        // Reset source node timer and check the neutral nodes if they will become sources or not. Add a source parent once sourced. 
-
-        // When something changes in the node we handle that separately to this logic - i.e. by changing the threshold for the node spread
+    public bool CheckAllNodesOfType(NodeType type)
+    {
+        return AllNodes.All(node => node.type == type);
     }
     
 }
