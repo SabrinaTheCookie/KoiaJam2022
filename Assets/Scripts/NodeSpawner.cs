@@ -60,14 +60,15 @@ public class NodeSpawner : MonoBehaviour
 
             if (noMoreNodes) break;
 
-            PlaceNode(xSpawn, ySpawn);
+            PlaceNode(xSpawn, ySpawn, i);
         }
     }
 
-    private void PlaceNode(float xSpawn, float ySpawn)
+    private void PlaceNode(float xSpawn, float ySpawn, int i)
     {
         GameObject node = Instantiate(nodePrefab, new Vector3(xSpawn, ySpawn, 0), Quaternion.identity);
         node.transform.localScale = new Vector3(nodeSizeMult, nodeSizeMult, 1);
+        node.name = "Node" + i;
 
         NewNode?.Invoke(node.GetComponent<Node>());
     }
