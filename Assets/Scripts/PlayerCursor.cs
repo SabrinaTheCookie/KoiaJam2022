@@ -6,7 +6,8 @@ public enum CursorTools
 {
     Promote = 0,
     Unfollow = 1,
-    Select = 2
+    Verify = 2,
+    Select = 3
 }
 public class PlayerCursor : MonoBehaviour
 {
@@ -29,7 +30,8 @@ public class PlayerCursor : MonoBehaviour
     {
         // Added to try and turn OFF buttons by pressing them again but does not work due to Update calls?
         if (newTool == "Promote" && currentTool == CursorTools.Promote || 
-            newTool == "Unfollow" && currentTool == CursorTools.Unfollow)
+            newTool == "Unfollow" && currentTool == CursorTools.Unfollow ||
+            newTool == "Verify" && currentTool == CursorTools.Verify)
         {
             // Turn the tool off and cancel the usage
             ResetCurrentToolButton();
@@ -45,6 +47,7 @@ public class PlayerCursor : MonoBehaviour
         {
             "Promote" => CursorTools.Promote,
             "Unfollow" => CursorTools.Unfollow,
+            "Verify" => CursorTools.Verify,
             "Select" => CursorTools.Select,
             _ => currentTool
         };
@@ -62,6 +65,10 @@ public class PlayerCursor : MonoBehaviour
             
             case CursorTools.Unfollow:
                 CooldownRadialManager.instance.GetRadial((int)CursorTools.Unfollow).ButtonDeselected();
+                break;
+            
+            case CursorTools.Verify:
+                CooldownRadialManager.instance.GetRadial((int)CursorTools.Verify).ButtonDeselected();
                 break;
             
             case CursorTools.Select:
@@ -112,6 +119,10 @@ public class PlayerCursor : MonoBehaviour
                 break;
             case CursorTools.Promote:
                 wasToolUsedSuccessfully = promoter.PromoteNodeAtPosition(mouseClickPos);
+                break;
+            case CursorTools.Verify:
+                Debug.Log("Verified");
+                wasToolUsedSuccessfully = true;
                 break;
             case CursorTools.Select:
                 break;

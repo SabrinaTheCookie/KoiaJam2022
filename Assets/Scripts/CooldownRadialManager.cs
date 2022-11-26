@@ -6,6 +6,7 @@ public class CooldownRadialManager : MonoBehaviour
 
     public CooldownRadial promoteCooldownRadial; 
     public CooldownRadial unfollowCooldownRadial; 
+    public CooldownRadial verifyCooldownRadial; 
     public CooldownRadial selectCooldownRadial; 
     
     public void Awake()
@@ -24,7 +25,8 @@ public class CooldownRadialManager : MonoBehaviour
         {
             0 => promoteCooldownRadial,
             1 => unfollowCooldownRadial,
-            2 => selectCooldownRadial,
+            2 => verifyCooldownRadial,
+            3 => selectCooldownRadial,
             _ => promoteCooldownRadial
         };
 
