@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 /// <summary>
@@ -9,6 +10,9 @@ public class InformationSource : MonoBehaviour
     public NodeType sourceType;
     private Node _nodeAttachedTo;
     public int informationPower;
+    private bool _isVerified;
+    private float _timeToBeVerifiedFor;
+    private float _timeVerified;
 
     [Header("Tick and Spread")] private float _timeSinceLastSpread;
     private float _spreadTime;
@@ -19,7 +23,7 @@ public class InformationSource : MonoBehaviour
         node.Source = this;
         sourceType = _nodeAttachedTo.type;
         informationPower = power;
-
+        _timeToBeVerifiedFor = GameController.Instance.GameVariables.timeSourcesVerifiedFor;
         CalculateSpreadTime();
     }
 
@@ -38,6 +42,11 @@ public class InformationSource : MonoBehaviour
         {
             _timeSinceLastSpread = 0f;
             SpreadPower();
+        }
+
+        if (_isVerified && Time.time > _timeVerified + _timeToBeVerifiedFor)
+        {
+            UnVerify();
         }
     }
 
@@ -59,5 +68,25 @@ public class InformationSource : MonoBehaviour
                 node.influenceSource = _nodeAttachedTo;
             }
         }
+    }
+
+    public bool IsVerified()
+    {
+        return _isVerified;
+    }
+
+    public void VerifySource()
+    {
+        informationPower *= 2;
+        _timeVerified = Time.time;
+        _isVerified = true;
+        _nodeAttachedTo.verifiedSprite.SetActive(true);
+    }
+
+    private void UnVerify()
+    {
+        _isVerified = false;
+        informationPower /= 2;
+        _nodeAttachedTo.verifiedSprite.SetActive(false);
     }
 }

@@ -672,6 +672,7 @@ MonoBehaviour:
     defaultReliablePower: 3
     defaultMisinformationPower: 5
     linkRefollowDuration: 20
+    timeSourcesVerifiedFor: 24
   nnmPrefab: {fileID: 1893234062359824775, guid: 4a5a4c8b878725d4aa9d225d2ff0064a, type: 3}
 --- !u!4 &725316415
 Transform:
@@ -701,6 +702,7 @@ GameObject:
   - component: {fileID: 904429426}
   - component: {fileID: 904429427}
   - component: {fileID: 904429428}
+  - component: {fileID: 904429429}
   m_Layer: 0
   m_Name: PlayerInput
   m_TagString: Untagged
@@ -821,6 +823,7 @@ MonoBehaviour:
   currentTool: 2
   promoter: {fileID: 904429428}
   unfollower: {fileID: 904429427}
+  verifier: {fileID: 904429429}
 --- !u!114 &904429427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -855,6 +858,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cooldownDuration: 10
+--- !u!114 &904429429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904429423}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6405fc6a33825c54c974d26b71a726fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cooldownDuration: 12
 --- !u!1 &1035829334
 GameObject:
   m_ObjectHideFlags: 0

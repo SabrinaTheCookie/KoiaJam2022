@@ -17,6 +17,7 @@ public class PlayerCursor : MonoBehaviour
 
     public Promote promoter;
     public Unfollow unfollower;
+    public Verifier verifier;
 
     public void ChangeTool(CursorTools newTool)
     {
@@ -121,8 +122,7 @@ public class PlayerCursor : MonoBehaviour
                 wasToolUsedSuccessfully = promoter.PromoteNodeAtPosition(mouseClickPos);
                 break;
             case CursorTools.Verify:
-                Debug.Log("Verified");
-                wasToolUsedSuccessfully = true;
+                wasToolUsedSuccessfully = verifier.VerifyNodeAtPos(mouseClickPos);
                 break;
             case CursorTools.Select:
                 break;

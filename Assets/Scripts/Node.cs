@@ -28,6 +28,7 @@ public class Node : MonoBehaviour
     private TMP_Text _debugText;
     [SerializeField] private GameObject circleObject;
     public SpriteRenderer circleSprite;
+    public GameObject verifiedSprite;
 
     public InformationSource Source { get; set; }
 
@@ -132,6 +133,13 @@ public class Node : MonoBehaviour
     public bool CanBePromoted()
     {
         return type != NodeType.Misinformed && connectedNodes.Any(node => node.type == NodeType.Reliable);
+    }
+
+    public bool CanBeVerified()
+    {
+        if (!Source) return false;
+
+        return !Source.IsVerified();
     }
 
     public void NodePromotion()
