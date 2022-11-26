@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+[Serializable]
 public enum CursorTools
 {
     Promote = 0,
@@ -40,8 +41,7 @@ public class PlayerCursor : MonoBehaviour
         }
         if (currentTool is CursorTools.Unfollow) unfollower.ClearCut();
         
-        //new tool button should be set to grey (This is done in editor via UnityEvents on the image game object).
-        
+        //new tool button should be set to selected(Grey) (This is done in editor via UnityEvents on the image game object).
         ResetCurrentToolButton();
 
         currentTool = newTool switch
@@ -53,6 +53,9 @@ public class PlayerCursor : MonoBehaviour
             _ => currentTool
         };
         NewToolSelected?.Invoke();
+
+        //Highlight valid nodes for current tool
+        NodeNetworkManager.NodeHighlighter.HighlightValidNodes(currentTool);
     }
 
     private void ResetCurrentToolButton() 
@@ -76,6 +79,9 @@ public class PlayerCursor : MonoBehaviour
                 CooldownRadialManager.instance.GetRadial((int)CursorTools.Select).ButtonDeselected();
                 break;
         }
+        
+        //Highlight valid nodes for current tool
+        NodeNetworkManager.NodeHighlighter.DeHighlightNodes();
     }
 
     public void Update()

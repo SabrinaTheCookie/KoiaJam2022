@@ -9,7 +9,8 @@ public enum NodeType
 {
     Reliable,
     Neutral,
-    Misinformed
+    Misinformed,
+    None
 }
 
 public class Node : MonoBehaviour

@@ -4,6 +4,7 @@ using UnityEngine;
 public class NodeNetworkManager : MonoBehaviour
 {
     public static List<Node> AllNodes { get; private set; }
+    public static NodeHighlighter NodeHighlighter { get; private set;}
     private static bool _startTicking;
 
     private void OnEnable()
@@ -40,6 +41,7 @@ public class NodeNetworkManager : MonoBehaviour
     private void Awake()
     {
         AllNodes = new List<Node>();
+        NodeHighlighter = GetComponent<NodeHighlighter>();
     }
 
     private static void AddNode(Node node)
@@ -98,6 +100,55 @@ public class NodeNetworkManager : MonoBehaviour
         infoSource.Attach(node, power);
     }
 
+    public static List<Node> FindNodes(ValidNode validNode)
+    {
+        List<Node> resultNodes = new List<Node>();
+        
+        foreach (Node node in AllNodes)
+        {
+            //Filter out unwanted node types
+            bool typeMatch = false;
+            foreach (NodeType nodeTypeFilter in validNode.nodeTypeFilters)
+            {
+                if (nodeTypeFilter is not NodeType.None)
+                {
+                    if(node.influenceSource)
+                        if (node.influenceSource.type == nodeTypeFilter)
+                            typeMatch = true;
+                }
+                    
+            }
+
+            //No type match? Look at next node
+            if (!typeMatch) continue;
+
+            //Filter out nodes without a neutral node connection
+            if (validNode.isConnectedToNeutralNode)
+            {
+                bool connected = false;
+            
+                //Check for neutral connections
+                foreach (Node connectedNode in node.connectedNodes)
+                {
+                    if (connectedNode.type is NodeType.Neutral) connected = true;
+                }
+
+                //Not connected to neutral node? Look at next node
+                if (!connected) continue;
+            }
+
+            //Filter for influence ranges
+            if (node.influence < validNode.minInfluence) continue;
+            if (node.influence > validNode.maxInfluence) continue;
+
+            //Add results
+            resultNodes.Add(node);
+            
+        }
+
+        return resultNodes;
+    }
+
     private void Update()
     {
         // GAME JAM LOGIC COMMENTS AT BOTTOM
@@ -129,4 +180,5 @@ public class NodeNetworkManager : MonoBehaviour
 
         // When something changes in the node we handle that separately to this logic - i.e. by changing the threshold for the node spread
     }
+    
 }
