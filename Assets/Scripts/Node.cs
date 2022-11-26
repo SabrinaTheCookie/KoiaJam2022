@@ -154,6 +154,11 @@ public class Node : MonoBehaviour
     {
         Debug.Log(transform.position + " has been demoted!");
     }
+
+    public int GetNumConnectedNodesNotOfType(NodeType nodeType)
+    {
+        return connectedNodes.Count(node => node.type != nodeType);
+    }
 }
 
 public class ComparisonX : IComparer<Node>

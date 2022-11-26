@@ -29,7 +29,8 @@ public class InformationSource : MonoBehaviour
 
     private void CalculateSpreadTime()
     {
-        var nodesConnectedTo = _nodeAttachedTo.connectedNodes.Count;
+        var nodesConnectedTo = _nodeAttachedTo.GetNumConnectedNodesNotOfType(sourceType);
+        
         // Spread time is the power * numb of connected nodes
         _spreadTime = nodesConnectedTo * informationPower;
     }

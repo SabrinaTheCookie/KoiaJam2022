@@ -33,8 +33,6 @@ public class NodeSpriteManager : MonoBehaviour
                 sr.sprite = misinformedSprite;
                 nodeRef.circleSprite.color = misinformedColorRing;
                 break;
-            default:
-                break;
         }
     }
 
