@@ -325,6 +325,7 @@ MonoBehaviour:
   influence: 0
   connectionRadius: 2.5
   influenceSource: {fileID: 0}
+  circleObject: {fileID: 2590574578021163115}
 --- !u!58 &4075455927196160885
 CircleCollider2D:
   m_ObjectHideFlags: 0

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 8676763}
   - component: {fileID: 8676762}
   m_Layer: 0
-  m_Name: AudioManager
+  m_Name: SFXManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -296,6 +296,9 @@ MonoBehaviour:
   neutralSprite: {fileID: 21300000, guid: 85c00bf4eb3e1a44db16530fedc28d72, type: 3}
   reliableSprite: {fileID: 21300000, guid: fd40b255c487fb04c81d9be5f5ece7ed, type: 3}
   misinformedSprite: {fileID: 21300000, guid: a8af7aaaae3171841bad3b3a3b59a1b4, type: 3}
+  neutralColorRing: {r: 0.45882353, g: 0.49019608, b: 0.68235296, a: 1}
+  reliableColorRing: {r: 0.043137256, g: 0.49803922, b: 0.96862745, a: 1}
+  misinformedColorRing: {r: 0.83137256, g: 0.27450982, b: 0.3254902, a: 1}
 --- !u!4 &452407787
 Transform:
   m_ObjectHideFlags: 0
@@ -1224,7 +1227,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 9c7d32911743ec64294717c2a8774615, type: 3}
+  m_audioClip: {fileID: 8300000, guid: cfb904ffcfdd140449d804fd6e7ada9d, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
