@@ -1,20 +1,17 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 
 public class Promote : MonoBehaviour
 {
     public float cooldownDuration;
-    public float timeOfCooldown;
+    private float _timeOfCooldown;
 
     public bool PromoteNodeAtPosition(Vector2 mousePos)
     {
         //Has the ability cooldown completed?
-        if (Time.time < timeOfCooldown + cooldownDuration)
+        if (Time.time < _timeOfCooldown + cooldownDuration)
         {
             //No! Warning message here?
-            Debug.Log("Promote is on Cooldown! " + (timeOfCooldown + cooldownDuration - Time.time) + " s remaining");
+            Debug.Log("Promote is on Cooldown! " + (_timeOfCooldown + cooldownDuration - Time.time) + " s remaining");
             return false;
         }
 
@@ -28,7 +25,7 @@ public class Promote : MonoBehaviour
         if (hitNode.type != NodeType.Misinformed)
         {
             hitNode.NodePromotion();
-            timeOfCooldown = Time.time;
+            _timeOfCooldown = Time.time;
             return true;
         }
 
