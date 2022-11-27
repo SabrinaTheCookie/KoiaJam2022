@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SoundEffects : MonoBehaviour
@@ -37,7 +38,7 @@ public class SoundEffects : MonoBehaviour
 
     private void ButtonPress()
     {
-        _audioSource.PlayOneShot(buttonClick);
+        _audioSource.PlayOneShot(buttonClick, 0.5f);
     }
 
     private void PlayCutAudio()
@@ -47,6 +48,13 @@ public class SoundEffects : MonoBehaviour
 
     private void RegisterForNodeChanges(GameVars gv)
     {
+        StartCoroutine(DelayedNodeChangeSounds());
+    }
+
+    private IEnumerator DelayedNodeChangeSounds()
+    {
+        yield return new WaitForSeconds(1);
+
         Node.NodeTypeChanged += PlayNodeChangedAudio;
     }
 
