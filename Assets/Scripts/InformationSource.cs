@@ -29,15 +29,6 @@ public class InformationSource : MonoBehaviour
         informationPower = power;
         _timeToBeVerifiedFor = GameController.Instance.GameVariables.timeSourcesVerifiedFor;
         _spreadTime = 1f;
-        // CalculateSpreadTime();
-    }
-
-    private void CalculateSpreadTime()
-    {
-        var nodesConnectedTo = _nodeAttachedTo.GetNumConnectedNodesNotOfType(sourceType);
-
-        // Spread time is the power * numb of connected nodes
-        _spreadTime = nodesConnectedTo * informationPower;
     }
 
     public void AddTime(float tick)
@@ -55,13 +46,9 @@ public class InformationSource : MonoBehaviour
             UnVerify();
         }
     }
-
-    // ReSharper disable Unity.PerformanceAnalysis
+    
     private void SpreadPower()
     {
-        Debug.Log(_nodeAttachedTo.name + " spread power to " +
-                  _nodeAttachedTo.connectedNodes.Count + " nodes.");
-
         var powerPerNode = (float) informationPower / _nodeAttachedTo.connectedNodes.Count / 10f;
 
         // For every connected node that is not the parent node, if it is neutral, spread the power to it.
