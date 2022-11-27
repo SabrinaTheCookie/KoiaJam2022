@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -23,9 +22,6 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameVars gameVariables;
     [SerializeField] private GameObject nnmPrefab;
     [SerializeField] private GameObject gameEndUI;
-    
-
-    
     [SerializeField] private GameObject gameWon;
     [SerializeField] private GameObject gameLost;
     [SerializeField] private GameObject gameUI;
