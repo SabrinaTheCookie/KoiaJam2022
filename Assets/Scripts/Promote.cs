@@ -52,7 +52,7 @@ public class Promote : MonoBehaviour
         GameController.StopGame += GameReset;
     }
 
-    private void GameReset()
+    private void GameReset(string s)
     {
         _timeOfCooldown = Time.time - cooldownDuration;
     }

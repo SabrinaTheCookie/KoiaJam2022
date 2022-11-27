@@ -75,7 +75,7 @@ public class Node : MonoBehaviour
         GameController.StopGame += KillSelf;
     }
 
-    private void KillSelf()
+    private void KillSelf(string s)
     {
         Destroy(gameObject);
     }

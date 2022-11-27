@@ -16,7 +16,7 @@ public class NodeNetworkManager : MonoBehaviour
         GameController.StopGame += GameControllerOnStopGame;
     }
 
-    private void GameControllerOnStopGame()
+    private void GameControllerOnStopGame(string s)
     {
         _startTicking = false;
     }

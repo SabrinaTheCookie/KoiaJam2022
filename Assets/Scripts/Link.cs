@@ -26,7 +26,7 @@ public class Link : MonoBehaviour
         GameController.StopGame += KillSelf;
     }
 
-    private void KillSelf()
+    private void KillSelf(string s)
     {
         Destroy(gameObject);
     }

@@ -11,6 +11,10 @@ public class SoundEffects : MonoBehaviour
     [SerializeField] private AudioClip nodeGoGood;
     [SerializeField] private AudioClip cutSound;
     [SerializeField] private AudioClip verifySound;
+    [SerializeField] private AudioClip winSound;
+    [SerializeField] private AudioClip loseSound;
+
+    [SerializeField] private AudioSource bgMusicSource;
 
     private void Awake()
     {
@@ -20,10 +24,31 @@ public class SoundEffects : MonoBehaviour
     private void OnEnable()
     {
         GameController.StartGame += RegisterForNodeChanges;
+        GameController.StopGame += PlayEndSound;
         Unfollow.CutNodes += PlayCutAudio;
         PlayerCursor.NewToolSelected += ButtonPress;
         Promote.NodePromoted += PlayPromoteSound;
         Verifier.NodeVerified += PlayVerifySound;
+    }
+
+    private void PlayEndSound(string obj)
+    {
+        bgMusicSource.Pause();
+        _audioSource.PlayOneShot(obj switch
+        {
+            "win" => winSound,
+            "lose" => loseSound,
+            _ => null
+        });
+
+        StartCoroutine(UnPauseBgMusic());
+    }
+
+    private IEnumerator UnPauseBgMusic()
+    {
+        yield return new WaitForSeconds(9);
+
+        bgMusicSource.UnPause();
     }
 
     private void PlayVerifySound()

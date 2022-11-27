@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class GameController : MonoBehaviour
 {
     public static event Action<GameVars> StartGame;
-    public static event Action StopGame;
+    public static event Action<string> StopGame;
     
     private enum GameState {
         MainMenu,
@@ -65,13 +65,13 @@ public class GameController : MonoBehaviour
         {
             _state = GameState.Won;
             GameEnded(_state);
-            StopGame?.Invoke();
+            StopGame?.Invoke("win");
         }
         else if (_nodeNetworkManager.CheckAllNodesOfType(NodeType.Misinformed))
         {
             _state = GameState.Lost;
             GameEnded(_state);
-            StopGame?.Invoke();
+            StopGame?.Invoke("lose");
         }
     }
 

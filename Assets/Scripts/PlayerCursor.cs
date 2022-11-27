@@ -153,7 +153,7 @@ public class PlayerCursor : MonoBehaviour
         GameController.StopGame += ResetAllValues;
     }
 
-    private void ResetAllValues()
+    private void ResetAllValues(string s)
     {
         currentTool = CursorTools.Select;
     }

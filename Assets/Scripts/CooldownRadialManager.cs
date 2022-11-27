@@ -19,7 +19,7 @@ public class CooldownRadialManager : MonoBehaviour
         GameController.StopGame += ResetRadials;
     }
 
-    private void ResetRadials()
+    private void ResetRadials(string s)
     {
         promoteCooldownRadial.ResetRadial();
         unfollowCooldownRadial.ResetRadial();

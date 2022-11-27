@@ -119,7 +119,7 @@ public class Unfollow : MonoBehaviour
         GameController.StopGame += GameReset;
     }
 
-    private void GameReset()
+    private void GameReset(string s)
     {
         _unfollowCooldownEndTime = Time.time;
     }
