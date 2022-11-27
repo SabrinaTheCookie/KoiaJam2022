@@ -1,3 +1,5 @@
+using System;
+using Unity.Mathematics;
 using UnityEngine;
 
 /// <summary>
@@ -16,6 +18,8 @@ public class InformationSource : MonoBehaviour
     [Header("Tick and Spread")]
     private float _timeSinceLastSpread;
     private float _spreadTime;
+
+    public static event Action PowerSpread;
 
     public void Attach(Node node, int power)
     {
@@ -72,6 +76,11 @@ public class InformationSource : MonoBehaviour
                 node.influenceSource = _nodeAttachedTo;
             }
         }
+
+        Vector3 offset = Vector3.up * _nodeAttachedTo.transform.localScale.y / 2;
+        //Create a like blip
+        Instantiate(GameController.Instance.GameVariables.likePrefab, transform.position + offset, quaternion.identity);
+
     }
 
     public bool IsVerified()
