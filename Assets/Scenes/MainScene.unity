@@ -175,7 +175,7 @@ MonoBehaviour:
   nodeGoGood: {fileID: 8300000, guid: 6423b72bc7ba03c438ab993b114b620b, type: 3}
   cutSound: {fileID: 8300000, guid: 2ded1a69e9fcc0142ab68efc544b2476, type: 3}
   verifySound: {fileID: 8300000, guid: 0a2bd9d282c62414ba9c8325661f1348, type: 3}
-  winSound: {fileID: 8300000, guid: 0a2bd9d282c62414ba9c8325661f1348, type: 3}
+  winSound: {fileID: 8300000, guid: 2e898f5bff8fed4408bc7e1587b21e3d, type: 3}
   loseSound: {fileID: 8300000, guid: cfadb786bf9598149b4bbfbb319c2b0e, type: 3}
   bgMusicSource: {fileID: 1774646331}
 --- !u!82 &8676763
@@ -1049,14 +1049,14 @@ MonoBehaviour:
   nodeSpawnerPrefab: {fileID: 3318823928572413469, guid: 912df7ec2e45f2d49a8a6f82d84d5e54, type: 3}
   gameVariables:
     numReliableSources: 2
-    numBadSources: 4
+    numBadSources: 3
     minTotalNodes: 40
     maxTotalNodes: 60
     maxDefaultNodeConnections: 3
     defaultReliablePower: 3
     defaultMisinformationPower: 5
-    linkRefollowDuration: 20
-    timeSourcesVerifiedFor: 24
+    linkRefollowDuration: 16
+    timeSourcesVerifiedFor: 18
     likePrefab: {fileID: 2248610900764688979, guid: cac04791a59a28b4a81864b310e40e11, type: 3}
   nnmPrefab: {fileID: 1893234062359824775, guid: 4a5a4c8b878725d4aa9d225d2ff0064a, type: 3}
   gameEndUI: {fileID: 404879729}
@@ -1229,7 +1229,7 @@ MonoBehaviour:
   cutEndPos: {x: 0, y: 0}
   minCutDistance: 0.1
   maxCutDistance: 2.5
-  unfollowCooldown: 30
+  unfollowCooldown: 26
   cutStarted: 0
   linkLayerMask:
     serializedVersion: 2
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e6578e6abb11b24f8e95a19191f76c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownDuration: 10
+  cooldownDuration: 14
 --- !u!114 &904429429
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1259,7 +1259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6405fc6a33825c54c974d26b71a726fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cooldownDuration: 12
+  cooldownDuration: 10
 --- !u!1 &965814297
 GameObject:
   m_ObjectHideFlags: 0

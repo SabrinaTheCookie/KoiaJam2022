@@ -46,7 +46,7 @@ public class NodeHighlighter : MonoBehaviour
         {
             //Highlight node
             node.GetComponent<SpriteRenderer>().color = highlightColor;
-            Debug.Log("Highlighting node " + node.name);
+            // Debug.Log("Highlighting node " + node.name);
         }
 
     }
@@ -59,7 +59,7 @@ public class NodeHighlighter : MonoBehaviour
         {
             //DeHighlight node
             node.GetComponent<SpriteRenderer>().color = dehighlightColor;
-            Debug.Log("DeHighlighting node " + node.name);
+            // Debug.Log("DeHighlighting node " + node.name);
         }
     }
 
