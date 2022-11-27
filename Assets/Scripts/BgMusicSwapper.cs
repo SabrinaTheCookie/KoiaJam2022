@@ -12,6 +12,7 @@ public class BgMusicSwapper : MonoBehaviour
         StartCoroutine(PlayAudioSequentially());
     }
 
+    // ReSharper disable once FunctionRecursiveOnAllPaths - intentional 
     private IEnumerator PlayAudioSequentially()
     {
         yield return null;
