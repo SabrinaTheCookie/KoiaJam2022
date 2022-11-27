@@ -40,7 +40,8 @@ public class NodeSpawner : MonoBehaviour
             GameController.Instance.GameVariables.minTotalNodes,
             GameController.Instance.GameVariables.maxTotalNodes);
 
-        Limits boundaries = Limits.GetLimits(_nodeRadius * boundaryBufferX, _nodeRadius * boundaryBufferY);
+        Limits boundaries = Limits.GetLimits(_nodeRadius * 3, _nodeRadius * boundaryBufferX, _nodeRadius * boundaryBufferY,
+            _nodeRadius * boundaryBufferY);
 
         Debug.Log(boundaries);
 
