@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NodeNetworkManager : MonoBehaviour
@@ -112,37 +113,19 @@ public class NodeNetworkManager : MonoBehaviour
     {
         List<Node> resultNodes = new List<Node>();
         
+        //Go through EVERY node
         foreach (Node node in AllNodes)
         {
-            //Filter out unwanted node types
-            bool typeMatch = false;
-            foreach (NodeType nodeTypeFilter in validNode.nodeTypeFilters)
-            {
-                if (nodeTypeFilter is not NodeType.None)
-                {
-                    if(node.influenceSource)
-                        if (node.influenceSource.type == nodeTypeFilter)
-                            typeMatch = true;
-                }
-                    
-            }
-
-            //No type match? Look at next node
-            if (!typeMatch) continue;
-
-            //Filter out nodes without a neutral node connection
-            if (validNode.isConnectedToNeutralNode)
-            {
-                bool connected = false;
             
-                //Check for neutral connections
-                foreach (Node connectedNode in node.connectedNodes)
-                {
-                    if (connectedNode.type is NodeType.Neutral) connected = true;
-                }
-
-                //Not connected to neutral node? Look at next node
-                if (!connected) continue;
+            switch (validNode.tool)
+            {
+                case CursorTools.Promote:
+                    if (!node.CanBePromoted()) continue;
+                    break;
+                
+                case CursorTools.Verify:
+                    if (!node.CanBeVerified()) continue;
+                    break;
             }
 
             //Filter for influence ranges
@@ -151,7 +134,6 @@ public class NodeNetworkManager : MonoBehaviour
 
             //Add results
             resultNodes.Add(node);
-            
         }
 
         return resultNodes;

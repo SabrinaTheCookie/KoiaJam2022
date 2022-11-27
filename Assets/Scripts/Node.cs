@@ -147,7 +147,7 @@ public class Node : MonoBehaviour
 
     public bool CanBePromoted()
     {
-        return type != NodeType.Misinformed && connectedNodes.Any(node => node.type == NodeType.Reliable);
+        return type == NodeType.Neutral && connectedNodes.Any(node => node.type == NodeType.Reliable);
     }
 
     public bool CanBeVerified()
