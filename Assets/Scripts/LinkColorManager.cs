@@ -11,11 +11,27 @@ public class LinkColorManager : MonoBehaviour
 
         if (link.startNode.type == link.endNode.type) return;
 
-        if (Mathf.Abs(link.startNode.influence - link.endNode.influence) > 10f)
+        if (link.startNode.type == NodeType.Neutral)
         {
-            lcg.SetOrigin(0);
-            return;
+            lcg.SetOrigin(1 - (float) link.startNode.influence / link.endNode.influence);
         }
-        
+
+        else if (link.endNode.type == NodeType.Neutral)
+        {
+            lcg.SetOrigin((float) link.endNode.influence / link.startNode.influence);
+        }
+
+        // Else, battle nodes, so the colours should reflect it properly
+        else
+        {
+            if (Mathf.Abs(link.startNode.influence) > Mathf.Abs(link.endNode.influence))
+            {
+                lcg.SetOrigin(1 - (0.5f + 0.5f * (link.startNode.influence + link.endNode.influence) / 10f));
+            }
+            else
+            {
+                lcg.SetOrigin(0.5f + 0.5f * (link.startNode.influence + link.endNode.influence) / 10f);
+            }
+        }
     }
 }
