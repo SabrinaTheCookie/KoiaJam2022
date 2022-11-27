@@ -40,7 +40,7 @@ public class LikeBlip : MonoBehaviour
         //TODO this is going wayyyy tooo fast!?!? Why!?!?
         //Reduce scale
         Vector3 newScale = transform.localScale;
-        newScale = scaleCurve.Evaluate(t) * newScale;
+        newScale = scaleCurve.Evaluate(t) * Vector3.one;
         //transform.localScale = newScale;
     }
 }

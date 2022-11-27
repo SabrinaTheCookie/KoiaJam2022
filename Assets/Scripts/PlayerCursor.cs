@@ -137,7 +137,7 @@ public class PlayerCursor : MonoBehaviour
         }
     }
 
-    private static Vector2 GetMousePosition()
+    public static Vector2 GetMousePosition()
     {
         //Get mouse position
         Vector2 mouseClickPos = Mouse.current.position.ReadValue();

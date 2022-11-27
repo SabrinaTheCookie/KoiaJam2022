@@ -18,6 +18,8 @@ public class Unfollow : MonoBehaviour
 
     public LayerMask linkLayerMask;
 
+    public UnfollowVFX unfollowVFX;
+
     public void StartCut(Vector2 newCutStartPos)
     {
         //Is it on cooldown?
@@ -31,6 +33,9 @@ public class Unfollow : MonoBehaviour
         cutStartPos = newCutStartPos;
         
         Debug.Log("Unfollow Cut Started");
+        
+        //Start VFX
+        unfollowVFX.ShowFX();
     }
 
     //Called when the mouse is released after a hold while Unfollow is selected
@@ -45,6 +50,7 @@ public class Unfollow : MonoBehaviour
         if (distance < minCutDistance)
         {
             Debug.Log("Distance was too short! Unfollow cut failed");
+            unfollowVFX.EndFX(false);
             return false;
         }
 
@@ -56,7 +62,7 @@ public class Unfollow : MonoBehaviour
         //Check for link collisions
         RaycastHit2D[] hits = Physics2D.RaycastAll(cutStartPos, cutEndPos - cutStartPos, distance, linkLayerMask, 0, 6);
 
-        Debug.Log(hits.Length);
+        
         //for each link hit
         int linksUnfollowed = 0;
         foreach (RaycastHit2D hit in hits)
@@ -70,9 +76,12 @@ public class Unfollow : MonoBehaviour
             }
         }
 
+        bool success = linksUnfollowed > 0;
+        unfollowVFX.EndFX(success);
         //Start cooldown if at least one link is broken.
-        if (linksUnfollowed > 0)
+        if (success)
         {
+            
             StartCooldown();
             CutNodes?.Invoke();
         }

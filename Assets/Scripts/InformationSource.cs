@@ -18,6 +18,7 @@ public class InformationSource : MonoBehaviour
     [Header("Tick and Spread")]
     private float _timeSinceLastSpread;
     private float _spreadTime;
+    private float _timeOfLastBlip; //sorry not sorry
 
     public static event Action PowerSpread;
 
@@ -64,6 +65,10 @@ public class InformationSource : MonoBehaviour
             }
         }
 
+        //Only show a blip every 2 seconds
+        if (Time.time < _timeOfLastBlip + 2) return;
+        
+        _timeOfLastBlip = Time.time;
         Vector3 offset = Vector3.up * _nodeAttachedTo.transform.localScale.y / 2;
         //Create a like blip
         Instantiate(GameController.Instance.GameVariables.likePrefab, transform.position + offset, quaternion.identity);
