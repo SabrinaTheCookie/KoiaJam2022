@@ -24,6 +24,8 @@ public class GameController : MonoBehaviour
     [SerializeField] private GameObject nnmPrefab;
     [SerializeField] private GameObject gameEndUI;
     
+
+    
     [SerializeField] private GameObject gameWon;
     [SerializeField] private GameObject gameLost;
     [SerializeField] private GameObject gameUI;

@@ -1053,6 +1053,7 @@ MonoBehaviour:
     defaultMisinformationPower: 5
     linkRefollowDuration: 20
     timeSourcesVerifiedFor: 24
+    likePrefab: {fileID: 2248610900764688979, guid: cac04791a59a28b4a81864b310e40e11, type: 3}
   nnmPrefab: {fileID: 1893234062359824775, guid: 4a5a4c8b878725d4aa9d225d2ff0064a, type: 3}
   gameEndUI: {fileID: 404879729}
   gameWon: {fileID: 1969487856}
