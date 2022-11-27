@@ -9,6 +9,7 @@ public class SoundEffects : MonoBehaviour
     [SerializeField] private AudioClip nodeGoNeutral;
     [SerializeField] private AudioClip nodeGoGood;
     [SerializeField] private AudioClip cutSound;
+    [SerializeField] private AudioClip verifySound;
 
     private void Awake()
     {
@@ -21,6 +22,12 @@ public class SoundEffects : MonoBehaviour
         Unfollow.CutNodes += PlayCutAudio;
         PlayerCursor.NewToolSelected += ButtonPress;
         Promote.NodePromoted += PlayPromoteSound;
+        Verifier.NodeVerified += PlayVerifySound;
+    }
+
+    private void PlayVerifySound()
+    {
+        _audioSource.PlayOneShot(verifySound);
     }
 
     private void PlayPromoteSound()

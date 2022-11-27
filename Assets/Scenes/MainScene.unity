@@ -173,7 +173,8 @@ MonoBehaviour:
   nodeGoBad: {fileID: 8300000, guid: 972ef4b881df9c24097e38b59e4d678b, type: 3}
   nodeGoNeutral: {fileID: 8300000, guid: 7e73473291fc0254789579fbef8670d1, type: 3}
   nodeGoGood: {fileID: 8300000, guid: 6423b72bc7ba03c438ab993b114b620b, type: 3}
-  cutSound: {fileID: 8300000, guid: 9272f2ab7371c874187517c325a8e7f0, type: 3}
+  cutSound: {fileID: 8300000, guid: 2ded1a69e9fcc0142ab68efc544b2476, type: 3}
+  verifySound: {fileID: 8300000, guid: 0a2bd9d282c62414ba9c8325661f1348, type: 3}
 --- !u!82 &8676763
 AudioSource:
   m_ObjectHideFlags: 0
