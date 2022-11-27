@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -28,7 +25,7 @@ public class LikeBlip : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         //Is it time to unalive?
         if (Time.time > _timeOfUnalive) Destroy(gameObject);
