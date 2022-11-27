@@ -21,7 +21,7 @@ public class LinkColorManager : MonoBehaviour
             lcg.SetOrigin(link.endNode.influence / link.startNode.influence);
         }
 
-        // Else, battle nodes, so the colours should reflect it properly
+        // Else, battle nodes, so the colours should reflect it properly. They don't though. :(
         else
         {
             if (link.startNode.type == NodeType.Reliable)
