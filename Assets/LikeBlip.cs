@@ -24,7 +24,7 @@ public class LikeBlip : MonoBehaviour
         _timeOfUnalive = Time.time + duration;
         
         //Only spawn blipChance percentage of the time
-        if(Random.Range(0,1) > blipChance) Destroy(gameObject);
+        if(Random.Range(0f,1f) > blipChance) Destroy(gameObject);
     }
 
     // Update is called once per frame
