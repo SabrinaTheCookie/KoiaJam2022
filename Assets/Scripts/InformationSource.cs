@@ -24,7 +24,8 @@ public class InformationSource : MonoBehaviour
         sourceType = _nodeAttachedTo.type;
         informationPower = power;
         _timeToBeVerifiedFor = GameController.Instance.GameVariables.timeSourcesVerifiedFor;
-        CalculateSpreadTime();
+        _spreadTime = 1f;
+        // CalculateSpreadTime();
     }
 
     private void CalculateSpreadTime()
@@ -54,8 +55,10 @@ public class InformationSource : MonoBehaviour
     // ReSharper disable Unity.PerformanceAnalysis
     private void SpreadPower()
     {
-        Debug.Log("node" + _nodeAttachedTo.name + " spread power to " +
-                  _nodeAttachedTo.GetNumConnectedNodesNotOfType(sourceType) + " nodes.");
+        Debug.Log(_nodeAttachedTo.name + " spread power to " +
+                  _nodeAttachedTo.connectedNodes.Count + " nodes.");
+
+        var powerPerNode = (float) informationPower / _nodeAttachedTo.connectedNodes.Count / 10f;
 
         // For every connected node that is not the parent node, if it is neutral, spread the power to it.
         foreach (Node node in _nodeAttachedTo.connectedNodes)
@@ -63,7 +66,7 @@ public class InformationSource : MonoBehaviour
             if (node.type == sourceType) continue;
             if (node == node.influenceSource) continue;
 
-            node.influence += sourceType == NodeType.Reliable ? informationPower * -1 : informationPower;
+            node.influence += sourceType == NodeType.Reliable ? powerPerNode * -1 : powerPerNode;
             if (!node.influenceSource)
             {
                 node.influenceSource = _nodeAttachedTo;

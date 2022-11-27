@@ -22,11 +22,10 @@ public class Node : MonoBehaviour
 
     public List<Node> connectedNodes;
     public NodeType type;
-    public int influence;
+    public float influence;
     public float connectionRadius;
     public Node influenceSource;
 
-    private TMP_Text _debugText;
     [SerializeField] private GameObject circleObject;
     public SpriteRenderer circleSprite;
     public GameObject verifiedSprite;
@@ -69,7 +68,6 @@ public class Node : MonoBehaviour
 
     private void Awake()
     {
-        _debugText = GetComponentInChildren<TMP_Text>();
         circleSprite = circleObject.GetComponent<SpriteRenderer>();
 
         //All nodes start as Neutral
@@ -117,27 +115,25 @@ public class Node : MonoBehaviour
 
     public void CheckPower()
     {
-        if (influence >= 10 && type != NodeType.Misinformed)
+        if (influence >= 10f && type != NodeType.Misinformed)
         {
             // This node is now influenced by bad information. RIP
             ChangeNodeType(NodeType.Misinformed);
-            influence = 10;
+            influence = 10f;
         }
 
-        if (influence <= -10 && type != NodeType.Reliable)
+        if (influence <= -10f && type != NodeType.Reliable)
         {
             // We have become a spreader of truths.
             ChangeNodeType(NodeType.Reliable);
-            influence = -10;
+            influence = -10f;
         }
 
-        if (type is NodeType.Misinformed or NodeType.Reliable && influence is < 5 and > -5)
+        if (type is NodeType.Misinformed or NodeType.Reliable && influence is < 5f and > -5f)
         {
             // Slowly changing our ways
             ChangeNodeType(NodeType.Neutral);
         }
-        
-        _debugText.text = influence.ToString();
     }
 
     public void BreakConnection(Node endNode)

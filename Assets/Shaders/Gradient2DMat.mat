@@ -39,7 +39,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _Origin: 0.5
-    - _Spread: 0.2
+    - _Spread: 0.1
     m_Colors:
     - _ColorBottom: {r: 0.043137256, g: 0.49803922, b: 0.96862745, a: 1}
     - _ColorTop: {r: 0.45882353, g: 0.49019608, b: 0.68235296, a: 1}
