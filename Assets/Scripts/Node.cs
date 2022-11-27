@@ -26,7 +26,6 @@ public class Node : MonoBehaviour
     public float connectionRadius;
     public Node influenceSource;
 
-    private TMP_Text _debugText;
     [SerializeField] private GameObject circleObject;
     public SpriteRenderer circleSprite;
     public GameObject verifiedSprite;
@@ -69,7 +68,6 @@ public class Node : MonoBehaviour
 
     private void Awake()
     {
-        _debugText = GetComponentInChildren<TMP_Text>();
         circleSprite = circleObject.GetComponent<SpriteRenderer>();
 
         //All nodes start as Neutral
@@ -136,8 +134,6 @@ public class Node : MonoBehaviour
             // Slowly changing our ways
             ChangeNodeType(NodeType.Neutral);
         }
-        
-        _debugText.text = influence.ToString();
     }
 
     public void BreakConnection(Node endNode)
