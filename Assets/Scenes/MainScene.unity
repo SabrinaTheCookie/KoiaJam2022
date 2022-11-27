@@ -1145,7 +1145,7 @@ MonoBehaviour:
       m_Flags: 0
     - m_Name: 
       m_Id: 304d45e7-d361-46a8-b438-619908e19260
-      m_Path: <Touchscreen>/primaryTouch/position
+      m_Path: <Touchscreen>/position
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -1270,7 +1270,7 @@ MonoBehaviour:
       m_Flags: 0
     - m_Name: 
       m_Id: 68566aa4-dce8-4472-87b2-048cd278a5c8
-      m_Path: <Touchscreen>/primaryTouch/tap
+      m_Path: <Touchscreen>/Press
       m_Interactions: 
       m_Processors: 
       m_Groups: 
@@ -1295,7 +1295,7 @@ MonoBehaviour:
       m_Flags: 0
     - m_Name: 
       m_Id: 304d45e7-d361-46a8-b438-619908e19260
-      m_Path: <Touchscreen>/primaryTouch/position
+      m_Path: <Touchscreen>/position
       m_Interactions: 
       m_Processors: 
       m_Groups: 
