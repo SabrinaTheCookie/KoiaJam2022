@@ -31,9 +31,7 @@ public class Unfollow : MonoBehaviour
 
         cutStarted = true;
         cutStartPos = newCutStartPos;
-        
-        Debug.Log("Unfollow Cut Started");
-        
+
         //Start VFX
         unfollowVFX.ShowFX();
     }
@@ -44,12 +42,10 @@ public class Unfollow : MonoBehaviour
         if (!cutStarted) return false; //Cut hasn't been started, why is one being ended?
         cutEndPos = newCutEndPos;
         
-        Debug.Log("Unfollow Cut Ended");    
         //If cursor position is closer than minCutDistance on cursor deselect, deselect the cut
         float distance = Vector2.Distance(cutStartPos, cutEndPos);
         if (distance < minCutDistance)
         {
-            Debug.Log("Distance was too short! Unfollow cut failed");
             unfollowVFX.EndFX(false);
             return false;
         }

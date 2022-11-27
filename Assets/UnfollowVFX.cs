@@ -1,12 +1,8 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Numerics;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
+using UnityEngine.InputSystem;
 
 public class UnfollowVFX : MonoBehaviour
 {
@@ -15,9 +11,21 @@ public class UnfollowVFX : MonoBehaviour
     public float vfxFadeDelay = 1.5f;
     public float minSpriteSize = 0.5f;
 
-    private Vector2 startPosition;
-    private Vector2 currentPosition;
-    private bool shouldUpdate;
+    private Vector2 _startPosition;
+    private Vector2 _currentPosition;
+    private bool _shouldUpdate;
+    
+    [SerializeField] private InputAction pos;
+    
+    private void OnEnable()
+    {
+        pos.Enable();
+    }
+
+    private void OnDisable()
+    {
+        pos.Disable();
+    }
 
     private void Start()
     {
@@ -26,17 +34,17 @@ public class UnfollowVFX : MonoBehaviour
 
     public void ShowFX()
     {
-        shouldUpdate = true;
+        _shouldUpdate = true;
         spriteRenderer.enabled = true;
-        startPosition = PlayerCursor.GetMousePosition();
-        currentPosition = startPosition;
+        _startPosition = PlayerCursor.GetMousePosition(pos.ReadValue<Vector2>());
+        _currentPosition = _startPosition;
 
         UpdateTransform();
     }
 
     public void EndFX(bool success)
     {
-        shouldUpdate = false;
+        _shouldUpdate = false;
         if (!success) spriteRenderer.enabled = false;
         else
         {
@@ -45,14 +53,14 @@ public class UnfollowVFX : MonoBehaviour
         }
     }
 
-    public void UpdateTransform()
+    private void UpdateTransform()
     {
         //Move to center of lines
-        Vector2 center = (startPosition + currentPosition) / 2;
+        Vector2 center = (_startPosition + _currentPosition) / 2;
         transform.position = center;
 
         //Set widthX to line distance.
-        float widthX = Vector2.Distance(startPosition, currentPosition);
+        float widthX = Vector2.Distance(_startPosition, _currentPosition);
         if (widthX < minSpriteSize) widthX = minSpriteSize;
         Vector2 newSpriteSize = new Vector2(widthX, minSpriteSize);
         spriteRenderer.size = newSpriteSize;
@@ -60,7 +68,7 @@ public class UnfollowVFX : MonoBehaviour
         
         //TODO Fix to get cut working
         //Set sprite rotation y2-y1, x2-x1
-        float angle = Mathf.Atan2(currentPosition.y - startPosition.y, currentPosition.x - startPosition.x) * Mathf.Rad2Deg;
+        float angle = Mathf.Atan2(_currentPosition.y - _startPosition.y, _currentPosition.x - _startPosition.x) * Mathf.Rad2Deg;
 
         Quaternion newRot = Quaternion.Euler(0, 0, angle);
         
@@ -69,7 +77,7 @@ public class UnfollowVFX : MonoBehaviour
 
     }
 
-    public IEnumerator SpriteRendererEnableDelay(bool newEnabled, float delay)
+    private IEnumerator SpriteRendererEnableDelay(bool newEnabled, float delay)
     {
         yield return new WaitForSeconds(delay);
         
@@ -78,11 +86,9 @@ public class UnfollowVFX : MonoBehaviour
 
     private void Update()
     {
-        if (shouldUpdate)
-        {
-            currentPosition = PlayerCursor.GetMousePosition();
-
-            UpdateTransform();
-        }
+        if (!_shouldUpdate) return;
+        
+        _currentPosition = PlayerCursor.GetMousePosition(pos.ReadValue<Vector2>());
+        UpdateTransform();
     }
 }

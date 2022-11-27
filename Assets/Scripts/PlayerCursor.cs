@@ -10,28 +10,52 @@ public enum CursorTools
     Verify = 2,
     Select = 3
 }
+
 public class PlayerCursor : MonoBehaviour
 {
     public static event Action NewToolSelected;
-    public PlayerInput playerInput;
+    [SerializeField] private InputAction click;
+    [SerializeField] private InputAction pos;
     public CursorTools currentTool = CursorTools.Select;
 
     public Promote promoter;
     public Unfollow unfollower;
     public Verifier verifier;
 
+    private void OnEnable()
+    {
+        GameController.StartGame += StartListeningForPresses;
+        GameController.StopGame += ResetAllValues;
+    }
+
+    private void StartListeningForPresses(GameVars obj)
+    {
+        click.Enable();
+        pos.Enable();
+        click.performed += ClickPressed;
+        click.canceled += ClickReleased;
+    }
+
+    private void OnDisable()
+    {
+        click.performed -= ClickPressed;
+        click.canceled -= ClickReleased;
+        click.Disable();
+        pos.Disable();
+    }
+
     public void ChangeTool(CursorTools newTool)
     {
         if (currentTool is CursorTools.Unfollow) unfollower.ClearCut();
         ResetCurrentToolButton();
-        
+
         currentTool = newTool;
     }
-    
+
     public void ChangeTool(string newTool)
     {
         // Added to try and turn OFF buttons by pressing them again but does not work due to Update calls?
-        if (newTool == "Promote" && currentTool == CursorTools.Promote || 
+        if (newTool == "Promote" && currentTool == CursorTools.Promote ||
             newTool == "Unfollow" && currentTool == CursorTools.Unfollow ||
             newTool == "Verify" && currentTool == CursorTools.Verify)
         {
@@ -39,8 +63,9 @@ public class PlayerCursor : MonoBehaviour
             ResetCurrentToolButton();
             return;
         }
+
         if (currentTool is CursorTools.Unfollow) unfollower.ClearCut();
-        
+
         //new tool button should be set to selected(Grey) (This is done in editor via UnityEvents on the image game object).
         ResetCurrentToolButton();
 
@@ -58,62 +83,57 @@ public class PlayerCursor : MonoBehaviour
         NodeNetworkManager.NodeHighlighter.HighlightValidNodes(currentTool);
     }
 
-    private void ResetCurrentToolButton() 
+    private void ResetCurrentToolButton()
     {
         //Deselect button (White)
         switch (currentTool)
         {
             case CursorTools.Promote:
-                CooldownRadialManager.instance.GetRadial((int)CursorTools.Promote).ButtonDeselected();
+                CooldownRadialManager.instance.GetRadial((int) CursorTools.Promote).ButtonDeselected();
                 break;
-            
+
             case CursorTools.Unfollow:
-                CooldownRadialManager.instance.GetRadial((int)CursorTools.Unfollow).ButtonDeselected();
+                CooldownRadialManager.instance.GetRadial((int) CursorTools.Unfollow).ButtonDeselected();
                 break;
-            
+
             case CursorTools.Verify:
-                CooldownRadialManager.instance.GetRadial((int)CursorTools.Verify).ButtonDeselected();
+                CooldownRadialManager.instance.GetRadial((int) CursorTools.Verify).ButtonDeselected();
                 break;
         }
-        
+
         //Highlight valid nodes for current tool
         NodeNetworkManager.NodeHighlighter.DeHighlightNodes();
     }
 
-    public void Update()
+    private void ClickPressed(InputAction.CallbackContext callback)
     {
-        //If a tool is selected
-        if (currentTool is not CursorTools.Select)
-        {
-            //TODO Remove from every frame & Include touch screen support
-            
-            //If LMB is pressed
-            if (Mouse.current.leftButton.wasPressedThisFrame)
-            {
-                UseCurrentTool(GetMousePosition());
-            }
+        // Only if a tool is selected
+        if (currentTool is CursorTools.Select) return;
 
-            //If Unfollow - Also check for release or if its held
-            if (currentTool is CursorTools.Unfollow)
-            {
-                if (Mouse.current.leftButton.wasReleasedThisFrame)
-                {
-                    bool toolUsedSuccessfully = unfollower.EndCut(GetMousePosition());
-                    if(toolUsedSuccessfully) ChangeTool(CursorTools.Select);
-                }
+        UseCurrentTool(GetMousePosition(pos.ReadValue<Vector2>()));
+    }
 
-                if (Mouse.current.leftButton.isPressed)
-                {
-                    unfollower.CheckMaxDist(GetMousePosition());
-                }
-            }
-        }
+    private void ClickReleased(InputAction.CallbackContext callback)
+    {
+        //If Unfollow - Also check for release or if its held
+        if (currentTool is not CursorTools.Unfollow) return;
+
+        var toolUsedSuccessfully = unfollower.EndCut(GetMousePosition(pos.ReadValue<Vector2>()));
+        if (toolUsedSuccessfully) ChangeTool(CursorTools.Select);
+    }
+
+    private void Update()
+    {
+        //If Unfollow - Also check for release or if its held
+        if (currentTool is not CursorTools.Unfollow) return;
+
+        unfollower.CheckMaxDist(GetMousePosition(pos.ReadValue<Vector2>()));
     }
 
     private void UseCurrentTool(Vector2 mouseClickPos)
     {
         bool wasToolUsedSuccessfully = false;
-        
+
         switch (currentTool)
         {
             case CursorTools.Unfollow:
@@ -137,24 +157,20 @@ public class PlayerCursor : MonoBehaviour
         }
     }
 
-    public static Vector2 GetMousePosition()
+    public static Vector2 GetMousePosition(Vector2 mouseClickPos)
     {
-        //Get mouse position
-        Vector2 mouseClickPos = Mouse.current.position.ReadValue();
-                
         //Convert to world coords and set
         mouseClickPos = Camera.main.ScreenToWorldPoint(mouseClickPos);
 
         return mouseClickPos;
     }
 
-    private void OnEnable()
-    {
-        GameController.StopGame += ResetAllValues;
-    }
-
     private void ResetAllValues(string s)
     {
         currentTool = CursorTools.Select;
+        click.performed -= ClickPressed;
+        click.canceled -= ClickReleased;
+        click.Disable();
+        pos.Disable();
     }
 }
