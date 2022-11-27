@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NodeNetworkManager : MonoBehaviour
 {
     public static List<Node> AllNodes { get; private set; }
+    public static NodeHighlighter NodeHighlighter { get; private set;}
     private static bool _startTicking;
 
     private void OnEnable()
@@ -48,6 +50,7 @@ public class NodeNetworkManager : MonoBehaviour
     private void Awake()
     {
         AllNodes = new List<Node>();
+        NodeHighlighter = GetComponent<NodeHighlighter>();
     }
 
     private static void AddNode(Node node)
@@ -106,6 +109,36 @@ public class NodeNetworkManager : MonoBehaviour
         infoSource.Attach(node, power);
     }
 
+    public static List<Node> FindNodes(ValidNode validNode)
+    {
+        List<Node> resultNodes = new List<Node>();
+        
+        //Go through EVERY node
+        foreach (Node node in AllNodes)
+        {
+            
+            switch (validNode.tool)
+            {
+                case CursorTools.Promote:
+                    if (!node.CanBePromoted()) continue;
+                    break;
+                
+                case CursorTools.Verify:
+                    if (!node.CanBeVerified()) continue;
+                    break;
+            }
+
+            //Filter for influence ranges
+            if (node.influence < validNode.minInfluence) continue;
+            if (node.influence > validNode.maxInfluence) continue;
+
+            //Add results
+            resultNodes.Add(node);
+        }
+
+        return resultNodes;
+    }
+
     private void Update()
     {
         // GAME JAM LOGIC COMMENTS AT BOTTOM
@@ -135,4 +168,5 @@ public class NodeNetworkManager : MonoBehaviour
     {
         return AllNodes.All(node => node.type == type);
     }
+    
 }
