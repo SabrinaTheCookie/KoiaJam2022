@@ -2454,8 +2454,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 904429426}
     - target: {fileID: 8726121596423450803, guid: ab75c1fb8eff9b14bac863f1bce3f9c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726121596423450803, guid: ab75c1fb8eff9b14bac863f1bce3f9c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726121596423450803, guid: ab75c1fb8eff9b14bac863f1bce3f9c4, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 904429426}
+    - target: {fileID: 8726121596423450803, guid: ab75c1fb8eff9b14bac863f1bce3f9c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8726121596423450803, guid: ab75c1fb8eff9b14bac863f1bce3f9c4, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_TargetAssemblyTypeName
+      value: CooldownRadial, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab75c1fb8eff9b14bac863f1bce3f9c4, type: 3}

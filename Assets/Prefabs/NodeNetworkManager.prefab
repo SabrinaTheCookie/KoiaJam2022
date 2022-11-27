@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1893234062359824774}
   - component: {fileID: 1893234062359824773}
+  - component: {fileID: 4151549315360475034}
   m_Layer: 0
   m_Name: NodeNetworkManager
   m_TagString: Untagged
@@ -44,3 +45,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ffd9d28d4eb815499556208a9e620c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4151549315360475034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1893234062359824775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21d0baa01af9c5242ab0680e5e900ea2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  validPromoteNode:
+    highlightColor: {r: 0.95647144, g: 0.5990566, b: 1, a: 1}
+    tool: 0
+    minInfluence: -9
+    maxInfluence: 4
+    nodeTypeFilters: 01000000
+    isConnectedToNeutralNode: 0
+  validVerifyNode:
+    highlightColor: {r: 0.3443396, g: 0.9590026, b: 1, a: 1}
+    tool: 2
+    minInfluence: -10
+    maxInfluence: 5
+    nodeTypeFilters: 00000000
+    isConnectedToNeutralNode: 1
+  dehighlightColor: {r: 1, g: 1, b: 1, a: 1}
